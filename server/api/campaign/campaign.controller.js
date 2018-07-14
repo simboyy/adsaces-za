@@ -156,31 +156,31 @@ function genereteQuote(req,res){
                   , dueDate: currentDate('date')
                   , explanation: "Thank you for your business!"
                   , currency: {
-                        main: "$"
-                      , secondary: "$"
+                        main: "R"
+                      , secondary: "R"
                     }
                 }
               , tasks:req.req.body.items
             }
           , seller: {
-                company: "Karmiens Enterprises T/A Mediabox Advertising."
+                company: "Adspaces Pvt LTD"
               , registrationNumber: "F05/XX/YYYY"
               , taxId: "0200092224"
               , address: {
-                    street: "Impala Road"
+                    street: "40 Basden Road"
                   , number: "8"
                   , zip: ""
-                  , city: "Borrowdale West ,Harare"
-                  , region: ""
-                  , country: "Zimbabwe"
+                  , city: "Littleton"
+                  , region: "Centurion"
+                  , country: "South Africa"
                 }
-              , phone: "+26377 2580 474/+26377 3439 246"
-              , email: "info@mediabox.co.zw"
-              , website: "www.mediabox.co.zw"
+              , phone: "+2779 246 5216"
+              , email: "info@adspaces.co.za"
+              , website: "www.adspaces.co.za"
               , bank: {
-                    name: "CBZ Bank Kwame Nkurumah"
-                  , swift: "COBZZWHAXXX"
-                  , currency: "$"
+                    name: "Absa Bank Limited"
+                  , swift: "ABSAZAJJ"
+                  , currency: "R"
                   , iban: "6101"
                 }
             }
@@ -226,10 +226,10 @@ function genereteQuote(req,res){
             var filename = 'my-invoice.html';           
              
             var data = {
-              from: 'Adspaces Advertising<billing@adspaces.co.zw>',
+              from: 'Adspaces Advertising<billing@adspaces.co.za>',
               to: 'smkorera@gmail.com',
               subject: 'Advertising Quote',
-              text: 'Thank you for booking your advert using Mediabox!',
+              text: 'Thank you for booking your advert using Adspaces!',
               html:"<html><p>Dear "+updated.items[0].advertiser.name+" </p><p>This is a  notice that your quotation which was generated on&nbsp;<span class='aBn' tabindex='0' data-term='goog_1714329927'><span class='aQJ'>"+currentDate('date')+"</span></span>&nbsp;is now available.</p><p>You can login to your client area to view more details at&nbsp;<a href='http://www.adspaces.co.zw/campaign' target='_blank' >http://www.adspaces.co.zw/campaign</a></p><p>Mediabox Advertising  (PVT) LTD</p></html>",
               attachment:filePath2
             };
@@ -319,24 +319,24 @@ function saveUpdates(updates) {
               , tasks:updated.items
             }
           , seller: {
-                company: "Karmiens Enterprises T/A Mediabox Advertising."
+                company: "Adspaces Pvt Ltd."
               , registrationNumber: "F05/XX/YYYY"
               , taxId: "0200092224"
-              , address: {
-                    street: "Impala Road"
+               , address: {
+                    street: "40 Basden Road"
                   , number: "8"
                   , zip: ""
-                  , city: "Harare"
-                  , region: ""
-                  , country: "Zimbabwe"
+                  , city: "Littleton"
+                  , region: "Centurion"
+                  , country: "South Africa"
                 }
-              , phone: "+26377 2580 474/+26377 3439 246"
-              , email: "info@mediabox.co.zw"
-              , website: "www.mediabox.co.zw"
+              , phone: "+2779 246 5216"
+              , email: "info@adspaces.co.za"
+              , website: "www.adspaces.co.za"
               , bank: {
-                    name: "CBZ Bank Kwame Nkurumah"
-                  , swift: "COBZZWHAXXX"
-                  , currency: "$"
+                    name: "Absa Bank Limited"
+                  , swift: "ABSAZAJJ"
+                  , currency: "R"
                   , iban: "6101"
                 }
             }

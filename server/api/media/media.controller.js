@@ -36,7 +36,7 @@ var BUCKET_NAME = 'mediabox-adverts';
 
 
    var aws = require('aws-sdk');
-   aws.config.update({accessKeyId: 'AKIAIL6ZDHOIRIPXFTQA', secretAccessKey: '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'});
+   aws.config.update({accessKeyId: 'AKIAID45Z2MGJGNU4U7Q', secretAccessKey: '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'});
    aws.config.update({region: 'us-east-1'});
 
    var s3 = new aws.S3();
@@ -118,8 +118,10 @@ function create(req, res) {
    req.files.file.path = req.files.file.path.replace("client\\", "").replace('client/', '').replace('client//', ''); 
   
    var str = req.files.file.path;
-   var arr = str.split("/");
+   
+   var arr = str.split("\\");
    var tempPath = arr[4];
+   console.log(tempPath);
    var fullPath = "https://s3.amazonaws.com/mediabox-adverts//resources/"+tempPath;  
     req.files.file.path = fullPath;
    

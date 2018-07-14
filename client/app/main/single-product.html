@@ -48,7 +48,7 @@
                                     </div>
                                     <md-button ng-click="single.reviewForm()" class="md-raised md-primary">Review this publisher</md-button>
                                 </div>
-                                <div class="col-sm-9">
+                                <div data-step="3" data-intro="Publisher`s brief introduction and figures!" class="col-sm-9">
                                     <div class="box" style="margin-right: 20px">
                                         <h3 class="text-center">Advertising in {{single.product.name}} </h3>
                                         <div ng-if="single.product.info">
@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box" id="div" style="margin-right: 20px">
+                            <div data-step="4" data-intro="Publisher`s rate card !" class="box" id="div" style="margin-right: 20px">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <summary ng-if="single.name"><small>{{single.name}} &nbsp; {{single.formart}} &nbsp;{{single.size}}</small></summary>
@@ -162,7 +162,7 @@
                                                             <br><small>{{adspace.model}}</small></td>
                                                         <td class="md-table-header"><small> 
                                                           <div layout="row" layout-align="start center">
-                                                          <cart-buttons variant="adspace" product="single.product"></cart-buttons>
+                                                          <cart-buttons  data-step="6" data-intro="Select to buy ad space and get 5 % discount!" variant="adspace" product="single.product"></cart-buttons>
                                                           
                                                       </div>
                                                  
@@ -183,7 +183,7 @@
         </div>
     </div>
        <!--div-->
-                            <section style="position: relative;" class="container">
+                            <section data-step="5" data-intro="View more information ,stats and figures about publisher!" style="position: relative;" class="container">
                                 <!--begin tabs -->
                                 <div ng-cloak>
                                     <md-content>
@@ -196,8 +196,8 @@
                                                                 <!-- tabs -->
                                                                 <div class="tabbable tabs-left">
                                                                     <ul class="nav nav-tabs">
-                                                                        <li class="active"><a href="#recommendations" data-toggle="tab">Recommendations</a></li>
-                                                                        <li><a href="#perfomancehistory" data-toggle="tab">Perfomance History</a></li>
+                                                                        <li class="active"><a data-target="#recommendations" data-toggle="tab">Recommendations</a></li>
+                                                                        <li><a data-target="#perfomancehistory" data-toggle="tab">Perfomance History</a></li>
                                                                         <!--  <li><a href="#services" data-toggle="tab">Services</a></li>
                                     <li><a href="#contact" data-toggle="tab">Contact</a></li> -->
                                                                     </ul>
@@ -208,17 +208,22 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Recommendations</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                    
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                        
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="f in single.product.recommendations track by $index">
-                                                                                                <td class="md-table-header">{{$index+1}}  </td>
-                                                                                                <td class="md-table-header">{{f.val}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container" ng-show="single.product.recommendations > 0">                                                                                    
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                
+                                                                                                <tbody>
+                                                                                                    <tr class="md-table-content-row" ng-repeat="f in single.product.recommendations track by $index">
+                                                                                                        <td class="md-table-header">{{$index+1}}  </td>
+                                                                                                        <td class="md-table-header">{{f.val}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            </div>
+
+                                                                                            <div ng-hide="single.product.recommendations > 0">
+                                                                                            No data Available
+
+                                                                                           </div>
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -236,17 +241,23 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Perfomance History</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                    
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                        
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="f in single.product.perfomanceHistory track by $index">
-                                                                                                <td class="md-table-header">{{$index+1}}  </td>
-                                                                                                <td class="md-table-header">{{f.val}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container" ng-show="single.product.perfomanceHistory > 0">                                                                                    
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                
+                                                                                                <tbody>
+                                                                                                    <tr class="md-table-content-row" ng-repeat="f in single.product.perfomanceHistory track by $index">
+                                                                                                        <td class="md-table-header">{{$index+1}}  </td>
+                                                                                                        <td class="md-table-header">{{f.val}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                           </div>
+                                                                                            <div ng-hide="single.product.perfomanceHistory > 0">
+                                                                                            No data Available
+
+                                                                                           </div>
+
+
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -286,11 +297,11 @@
                                                                 <!-- tabs -->
                                                                 <div class="tabbable tabs-left">
                                                                     <ul class="nav nav-tabs">
-                                                                        <li class="active"><a href="#about" data-toggle="tab">About</a></li>
-                                                                        <li><a href="#pastadvertisers" data-toggle="tab">Past Advertisers</a></li>
+                                                                        <li class="active"><a data-target="#about" data-toggle="tab">About</a></li>
+                                                                        <li><a data-target="#pastadvertisers" data-toggle="tab">Past Advertisers</a></li>
                                                                       
-                                                                        <li><a href="#calendar" data-toggle="tab">Production Calendar</a></li>
-                                                                          <li><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                                                                        <li><a data-target="#calendar" data-toggle="tab">Production Calendar</a></li>
+                                                                          <li><a data-target="#reviews" data-toggle="tab">Reviews</a></li>
                                                                     </ul>
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane " id="pastadvertisers">
@@ -300,17 +311,23 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Past Advertisers</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                        
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                        
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="f in single.product.pastAdvertisers track by $index">
-                                                                                                <td class="md-table-header">{{$index+1}}  </td>
-                                                                                                <td class="md-table-header">{{f.val}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container" ng-show="single.product.pastAdvertisers > 0">                                                                                        
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                
+                                                                                                <tbody>
+                                                                                                    <tr class="md-table-content-row" ng-repeat="f in single.product.pastAdvertisers track by $index">
+                                                                                                        <td class="md-table-header">{{$index+1}}  </td>
+                                                                                                        <td class="md-table-header">{{f.val}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                    
+                                                                                          </div>
+
+                                                                                          <div ng-hide="single.product.pastAdvertisers > 0">
+                                                                                            No data Available
+
+                                                                                           </div>
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -402,28 +419,33 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">{{single.product.name}} Production Calendar</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                        
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                         <thead>
-                                                                                            <tr class="md-table-headers-row">
-                                                                                                <th class="md-table-header">&nbsp;</th>
-                                                                                                <th class="md-table-header">Issue</th>
-                                                                                                <th class="md-table-header">Booking Deadline</th>
-                                                                                                 <th class="md-table-header">Material Deadline</th>
-                                                                                                <th class="md-table-header">Onshelf</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="f in single.product.productionCalendar track by $index">
-                                                                                                <td class="md-table-header">{{$index+1}}  </td>
-                                                                                                <td class="md-table-header">{{f.Issue}}</td>
-                                                                                                <td class="md-table-header">{{f.BookingDeadLine}}</td>
-                                                                                                <td class="md-table-header">{{f.MaterialDealine}}</td>
-                                                                                                <td class="md-table-header">{{f.OnShelf}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container" ng-show ="single.product.productionCalendar > 0">                                                                                        
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                 <thead>
+                                                                                                    <tr class="md-table-headers-row">
+                                                                                                        <th class="md-table-header">&nbsp;</th>
+                                                                                                        <th class="md-table-header">Issue</th>
+                                                                                                        <th class="md-table-header">Booking Deadline</th>
+                                                                                                         <th class="md-table-header">Material Deadline</th>
+                                                                                                        <th class="md-table-header">Onshelf</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr class="md-table-content-row" ng-repeat="f in single.product.productionCalendar track by $index">
+                                                                                                        <td class="md-table-header">{{$index+1}}  </td>
+                                                                                                        <td class="md-table-header">{{f.Issue}}</td>
+                                                                                                        <td class="md-table-header">{{f.BookingDeadLine}}</td>
+                                                                                                        <td class="md-table-header">{{f.MaterialDealine}}</td>
+                                                                                                        <td class="md-table-header">{{f.OnShelf}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                          </div>
+
+                                                                                          <div ng-hide="single.product.productionCalendar > 0">
+                                                                                            No data Available
+
+                                                                                           </div>
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -442,7 +464,7 @@
                                                     </p>
                                                 </md-content>
                                             </md-tab>
-                                            <md-tab label="Numbers">
+                                            <md-tab label="Statistics">
                                                 <md-content class="md-padding">
                                                     <p>
                                                         <div class="row">
@@ -452,11 +474,12 @@
                                                                     <ul class="nav nav-tabs">
                                                                         <!-- <li ><a href="#facts" data-toggle="tab">Facts </a></li> -->
                                                                         <!-- <li><a href="#estimates" data-toggle="tab">Estimated Monthly Views and clicks</a></li> -->
-                                                                        <li class="active"><a href="#gender" data-toggle="tab">Demographics-Gender</a></li>
-                                                                        <li><a href="#age" data-toggle="tab">Demographics-Age</a></li>
-                                                                        <li><a href="#income" data-toggle="tab">Demographics-Income Level</a></li>
-                                                                        <li><a href="#region" data-toggle="tab">Demographics-Region</a></li>
-                                                                        <li><a href="#audience" data-toggle="tab">Target Audience</a></li>
+                                                                        <li class="active"><a data-target="#gender" data-toggle="tab">Demographics-Gender</a></li>
+                                                                        <li><a data-target="#age" data-toggle="tab">Demographics-Age</a></li>
+                                                                        <li><a data-target="#income" data-toggle="tab">Demographics-Income Level</a></li>
+                                                                        <li><a data-target="#region" data-toggle="tab">Demographics-Region</a></li>
+                                                                        <li ng-if="single.newspapers||single.magazines&&single.product.demographics"><a data-target="#distribution" data-toggle="tab">Distribution Channels</a></li>
+                                                                        <li><a data-target="#audience" data-toggle="tab">Target Audience</a></li>
                                                                     </ul>
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane " id="facts">
@@ -478,22 +501,28 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Gender</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                        
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                        <thead>
-                                                                                            <tr class="md-table-headers-row">
-                                                                                                <th class="md-table-header">Gender</th>
-                                                                                                <th class="md-table-header">Share (%)</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Gender':item.key">
-                                                                                                <td class="md-table-header">{{item.val}} </td>
-                                                                                                <td class="md-table-header">{{item.val2}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container"  ng-show="single.genderData.length  > 0">                                                                                        
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                <thead>
+                                                                                                    <tr class="md-table-headers-row">
+                                                                                                        <th class="md-table-header">Gender</th>
+                                                                                                        <th class="md-table-header">Share (%)</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Gender':item.key">
+                                                                                                        <td class="md-table-header">{{item.val}} </td>
+                                                                                                        <td class="md-table-header">{{item.val2}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                           </div>
+
+
+                                                                                           <div ng-hide="single.genderData.length > 0">
+                                                                                             No data Available
+
+                                                                                           </div>
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -501,7 +530,7 @@
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="panel panel-default">
-                                                                                        <div class="panel-heading"> Split</div>
+                                                                                        
                                                                                         <div class="panel-body">                                              
                                                                                              <canvas width="688" height="343" id="doughnut" class="chart chart-doughnut" chart-data="single.genderData" chart-labels="single.genderLabels">
                                                                                 </canvas>
@@ -519,22 +548,27 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Age</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                        
-                                                                                       <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                        <thead>
-                                                                                            <tr class="md-table-headers-row">
-                                                                                                <th class="md-table-header">Age Group</th>
-                                                                                                <th class="md-table-header">Share (%)</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Age':item.key">
-                                                                                                <td class="md-table-header">{{item.val}} </td>
-                                                                                                <td class="md-table-header">{{item.val2}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container" ng-show="single.ageData.length  > 0">                                                                                        
+                                                                                               <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                <thead>
+                                                                                                    <tr class="md-table-headers-row">
+                                                                                                        <th class="md-table-header">Age Group</th>
+                                                                                                        <th class="md-table-header">Share (%)</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Age':item.key">
+                                                                                                        <td class="md-table-header">{{item.val}} </td>
+                                                                                                        <td class="md-table-header">{{item.val2}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                       </div>
+
+                                                                                       <div ng-hide="single.ageData.length  > 0">
+                                                                                             No data Available
+
+                                                                                           </div>
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -542,7 +576,7 @@
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="panel panel-default">
-                                                                                        <div class="panel-heading">Split</div>
+                                                                                          
                                                                                         <div class="panel-body">                                          
 
                                                                                             <canvas id="doughnut"  width="688" height="343" class="chart chart-doughnut" chart-data="single.ageData" chart-labels="single.ageLabels">
@@ -562,22 +596,29 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Income Level</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                        
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                        <thead>
-                                                                                            <tr class="md-table-headers-row">
-                                                                                                <th class="md-table-header">Income Level</th>
-                                                                                                <th class="md-table-header">Share (%)</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Income':item.key">
-                                                                                                <td class="md-table-header">{{item.val}} </td>
-                                                                                                <td class="md-table-header">{{item.val2}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container"  ng-show="single.incomeData.length > 0">                                                                                        
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                <thead>
+                                                                                                    <tr class="md-table-headers-row">
+                                                                                                        <th class="md-table-header">Income Level</th>
+                                                                                                        <th class="md-table-header">Share (%)</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Income':item.key">
+                                                                                                        <td class="md-table-header">{{item.val}} </td>
+                                                                                                        <td class="md-table-header">{{item.val2}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                         </div>
+
+                                                                                         <div ng-hide="single.incomeData.length  > 0">
+                                                                                             No data Available
+
+                                                                                           </div>
+
+
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -585,7 +626,7 @@
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="panel panel-default">
-                                                                                        <div class="panel-heading">Split</div>
+                                                                                          
                                                                                         <div class="panel-body">                                                                                           
                                                                                             <canvas width="688" height="343" id="doughnut" class="chart chart-doughnut" chart-data="single.incomeData" chart-labels="single.incomeLabels">
                                                                                             </canvas>
@@ -603,22 +644,27 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Region</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                        
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                            <thead>
-                                                                                                <tr class="md-table-headers-row">
-                                                                                                    <th class="md-table-header">Region</th>
-                                                                                                    <th class="md-table-header">Share (%)</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Country':item.key">
-                                                                                                    <td class="md-table-header">{{item.val}} </td>
-                                                                                                    <td class="md-table-header">{{item.val2}}</td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container" ng-show="single.countryData.length  > 0">                                                                                        
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                    <thead>
+                                                                                                        <tr class="md-table-headers-row">
+                                                                                                            <th class="md-table-header">Region</th>
+                                                                                                            <th class="md-table-header">Share (%)</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Country':item.key">
+                                                                                                            <td class="md-table-header">{{item.val}} </td>
+                                                                                                            <td class="md-table-header">{{item.val2}}</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+
+                                                                                             <div ng-hide="single.countryData.length  > 0">
+                                                                                             No data Available
+
+                                                                                           </div>
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -626,7 +672,7 @@
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="panel panel-default">
-                                                                                        <div class="panel-heading">Split</div>
+                                                                                          
                                                                                         <div class="panel-body">
                                                                                              <canvas  width="688" height="343" id="doughnut" class="chart chart-doughnut"
                                                                                               chart-data="single.countryData" chart-labels="single.countryLabels">
@@ -637,6 +683,52 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="tab-pane" id="distribution">
+                                                                            <div class="row">
+                                                                                <div class="col-md-4">
+                                                                                    <div class="panel panel-default">
+                                                                                        <div class="panel-heading">Distribution Channels</div>
+                                                                                        <div class="panel-body">
+                                                                                            <div class="md-table-container" ng-show="single.distributionData.length > 0">                                                                                        
+                                                                                                    <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                    <thead>
+                                                                                                        <tr class="md-table-headers-row">
+                                                                                                            <th class="md-table-header">Channel</th>
+                                                                                                            <th class="md-table-header">Share (Copies) </th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr class="md-table-content-row" ng-repeat="item in single.product.demographics | filter:'Distribution Channel':item.key">
+                                                                                                            <td class="md-table-header">{{item.val}} </td>
+                                                                                                            <td class="md-table-header">{{item.val2}}</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+
+                                                                                            <div ng-hide="single.distributionData.length > 0">
+                                                                                             No data Available
+
+                                                                                           </div>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <div class="panel panel-default">
+                                                                                        
+                                                                                        <div class="panel-body">                                              
+                                                                                             <canvas width="688" height="343" id="doughnut" class="chart chart-doughnut" chart-data="single.distributionData" chart-labels="single.distributionLabels">
+                                                                                </canvas>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            
+                                                                        </div>
                                                                         <div class="tab-pane" id="audience">
 
                                                                               <div class="row">
@@ -644,17 +736,22 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Audience Profle</div>
                                                                                         <div class="panel-body">
-                                                                                             <div class="md-table-container">                                                                                        
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                           
-                                                                                            <tbody>
-                                                                                                <tr class="md-table-content-row" ng-repeat="f in single.product.targetAudience track by $index">
-                                                                                                    <td class="md-table-header">{{$index+1}} </td>
-                                                                                                    <td class="md-table-header">{{f.val}}</td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
+                                                                                             <div class="md-table-container" ng-show="single.product.targetAudience  > 0">                                                                                        
+                                                                                                <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                   
+                                                                                                    <tbody>
+                                                                                                        <tr class="md-table-content-row" ng-repeat="f in single.product.targetAudience track by $index">
+                                                                                                            <td class="md-table-header">{{$index+1}} </td>
+                                                                                                            <td class="md-table-header">{{f.val}}</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                           </div>
+
+                                                                                           <div ng-hide="single.product.targetAudience  > 0">
+                                                                                             No data Available
+
+                                                                                           </div>
                                                                                            
                                                                                             
                                                                                         </div>
@@ -685,10 +782,10 @@
                                                                 <!-- tabs -->
                                                                 <div class="tabbable tabs-left">
                                                                     <ul class="nav nav-tabs">
-                                                                        <li class="active"><a href="#process" data-toggle="tab">Execution Process</a></li>
-                                                                        <li><a href="#publishing" data-toggle="tab">Confirmaton</a></li>
-                                                                        <li><a href="#help" data-toggle="tab">How Adspaces can help you ?</a></li>
-                                                                        <li><a href="#creative" data-toggle="tab">Creative</a></li>
+                                                                        <li class="active"><a data-target="#process" data-toggle="tab">Execution Process</a></li>
+                                                                        <li><a data-target="#publishing" data-toggle="tab">Confirmaton</a></li>
+                                                                        <li><a data-target="#help" data-toggle="tab">How Adspaces can help you ?</a></li>
+                                                                        <li><a data-target="#creative" data-toggle="tab">Creative</a></li>
                                                                     </ul>
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane active" id="process">
@@ -697,14 +794,7 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Execution Process</div>
                                                                                         <div class="panel-body">
-                                                                                            <ul>
-                                                                                                <li ng-repeat="f in single.product.steps track by $index">
-                                                                                                    <h3>Step {{$index+1}}</h3>
-                                                                                                    <br>
-                                                                                                    <p>{{f.val}}
-                                                                                                        <p>
-                                                                                                </li>
-                                                                                            </ul>
+                                                                                             <div ng-include="'components/messages/how-it-works.html'"></div>
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -722,8 +812,41 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">How do i know my advert was published</div>
                                                                                         <div class="panel-body">
-                                                                                            <p>{{single.product.confirmation}}</p>
-                                                                                            
+                                                                                              <div ng-if="single.magazines">
+                                                                                                Once the advertisement is printed in the Magazine, copies of the Magazine are sent to the client within one working week
+                                                                                              </div>
+                                                                                                <div ng-if="single.airline">
+                                                                                                    Once the advertisement is printed in the Magazine, copies of the Magazine are sent to the client within one working week
+                                                                                                </div>
+                                                                                                <div ng-if="single.emailMarketing">
+                                                                                                    Once the advertisement has been send ,email delivery report will be made available for the client within one working week
+                                                                                                </div>
+                                                                                                <div ng-if="single.cinema">
+                                                                                                    The precise spot timings of the Advertisement will be sent to the client for verification.
+                                                                                                </div>
+                                                                                                <div ng-if="single.newspapers">
+                                                                                                    Once the advertisement is printed in the Newspaper, copies of the Newspaper are sent to the client within one working week
+                                                                                                </div>
+                                                                                                <div ng-if="single.radio">
+                                                                                                    The Radio Station will provide the precise spot timings of the Advertisement on every day of the campaign.
+                                                                                                </div>
+                                                                                                <div ng-if="single.television">
+                                                                                                    The precise spot timings of the Advertisement will be sent to the client for verification.
+                                                                                                </div>
+                                                                                                <div ng-if="single.default">
+                                                                                                    
+                                                                                                </div>
+                                                                                                <div ng-if="single.billboards">
+                                                                                                     Once the advertisement is put up,the exact location is sent  sent to the client within one working week including pictures of the live billboard
+                                                                                                </div>
+                                                                                                <div ng-if="single.banner">
+                                                                                                    Once the advertisement is published on the website, a link of the website is sent to the client within one working week
+                                                                                                    
+                                                                                                </div>
+                                                                                                <div ng-if="single.socialMedia">
+                                                                                                    Once the advertisement is published on the socila media platform, a link to the page sent to the client within one working week
+                                                                                                </div>
+                                                                                                            
                                                                                         </div>
                                                                                     </div>
                                                                                     
@@ -740,7 +863,22 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">How Adspaces Can Help You</div>
                                                                                         <div class="panel-body">
-                                                                                            <p>{{single.product.whyadspaces}}</p>
+                                                                                           <p>Adspaces is a multi-purpose tool designed to automate the otherwise lengthy manual and error prone advert booking process into something efficient and can be done in a fraction of time as compared to the current process</p>
+                                                                                            <p>Benefits of using Adspaces</p>
+                                                                                            <ol>
+                                                                                            <li>1 .Media discovery at the click of a button &ndash; advertisers can now quickly search for ad spaces that suit their campaign objectives</li>
+                                                                                            </ol>
+                                                                                            <ol start="2">
+                                                                                            <li>2 .Convenience-saves a lot of hustles(ad placement without driving to the publishers office )</li>
+                                                                                            <li>3 .Tracking and analytics &ndash; Premium users get reports and analytics data eg their usage patterns</li>
+                                                                                            </ol>
+                                                                                            <ol start="4">
+                                                                                            <li>4 .Advertisers can build advertising campaigns in minutes and execute ,everything done through the platform .</li>
+                                                                                            <li>
+                                                                                            <p >Provides discounted cost without asking any question or forcing you to signup, we offer the best advertising cost to our clients, you can either send an email or call us at phone number listed on the site if you want us to run the campaign for you .</span></p>
+                                                                                            </li>
+                                                                                            </ol>
+                                                                                          
                                                                                             
                                                                                         </div>
                                                                                     </div>
@@ -759,19 +897,24 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Guideline to Advert Creation</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container">                                                                                    
-                                                                                        <table md-colresize="md-colresize" class="md-table" id="exportable">
-                                                                                        
-                                                                                        <tbody>
-                                                                                            <tr class="md-table-content-row" ng-repeat="f in single.product.guidelines track by $index">
-                                                                                                <td class="md-table-header">{{$index+1}}  </td>
-                                                                                                <td class="md-table-header">{{f.val}}</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    </div>
+                                                                                            <div class="md-table-container" ng-show="single.product.guidelines  > 0">                                                                                    
+                                                                                                    <table md-colresize="md-colresize" class="md-table" id="exportable">
+                                                                                                    
+                                                                                                    <tbody>
+                                                                                                        <tr class="md-table-content-row" ng-repeat="f in single.product.guidelines track by $index">
+                                                                                                            <td class="md-table-header">{{$index+1}}  </td>
+                                                                                                            <td class="md-table-header">{{f.val}}</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
                                                                                             
                                                                                         </div>
+
+                                                                                        <div ng-hide="single.product.guidelines  > 0">
+                                                                                             No data Available
+
+                                                                                           </div>
                                                                                     </div>
                                                                                     
                                                                                 </div>
@@ -799,9 +942,9 @@
                                                                 <div class="tabbable tabs-left">
                                                                     <ul class="nav nav-tabs">
                                                                         <!-- <li class="active"><a href="#guideline" data-toggle="tab">Guidelines for Advert Creation</a></li> -->
-                                                                        <li class="active"> <a href="#why" data-toggle="tab">Advantages of advertising in {{single.product.name}}</a></li>
-                                                                        <li><a href="#whyadspaces" data-toggle="tab">Why advertise through Adspaces</a></li>
-                                                                        <li><a href="#Learn" data-toggle="tab">Learn </a></li>
+                                                                        <li class="active"> <a data-target="#why" data-toggle="tab">Advantages of advertising in {{single.product.name}}</a></li>
+                                                                        <li><a data-target="#whyadspaces" data-toggle="tab">Why advertise through Adspaces</a></li>
+                                                                        <li><a data-target="#Learn" data-toggle="tab">Learn </a></li>
                                                                     </ul>
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane " id="guideline">
@@ -919,3 +1062,9 @@
         $("#movecenter").click();
     });
     </script>
+     <script type="text/javascript">
+       $('.tabbable li a').click(function (e) {
+            e.preventDefault();
+            console.log(e);
+        });
+     </script>

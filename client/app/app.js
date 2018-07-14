@@ -6134,6 +6134,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             vm.countryLabels  = [];
             vm.countryData    = [];
+
+            vm.distributionData = [];
+            vm.distributionLabels = [];
             ////console.log($stateParams);
             //
             if (id == null) {
@@ -6151,6 +6154,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                       for (var i = 0; i < vm.product.demographics.length; i++) {
                       vm.product.demographics[i];
+                      console.log(vm.product.demographics[i]);
                      
                       if (vm.product.demographics[i].key=="Gender") {
                           vm.genderLabels.push(vm.product.demographics[i].val);
@@ -6168,9 +6172,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                           vm.countryLabels.push(vm.product.demographics[i].val);
                           vm.countryData.push(vm.product.demographics[i].val2);
                       }
+
+                      if (vm.product.demographics[i].key=="Distribution Channel") {
+                        vm.distributionLabels.push(vm.product.demographics[i].val);
+                        vm.distributionData.push(vm.product.demographics[i].val2);
+                      }
                     }
 
-                     console.log(vm.genderLabels,vm.genderData);
+                     console.log(vm.distributionLabels,vm.distributionData);
                 });
             } else {
 
@@ -6188,6 +6197,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     for (var i = 0; i < vm.product.demographics.length; i++) {
                       vm.product.demographics[i];
+                      console.log(vm.product.demographics[i]);
                      
                       if (vm.product.demographics[i].key=="Gender") {
                           vm.genderLabels.push(vm.product.demographics[i].val);
@@ -6205,9 +6215,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                           vm.countryLabels.push(vm.product.demographics[i].val);
                           vm.countryData.push(vm.product.demographics[i].val2);
                       }
+                      if (vm.product.demographics[i].key=="Distribution Channel") {
+                        vm.distributionLabels.push(vm.product.demographics[i].val);
+                        vm.distributionData.push(vm.product.demographics[i].val2);
+                      }
                     }
 
-                     console.log(vm.genderLabels,vm.genderData);
+                     console.log(vm.distributionLabels,vm.distributionData);
 
                     vm.learn(res);
 
@@ -8265,15 +8279,15 @@ angular.module('mediaboxApp').config(function ($stateProvider) {
   angular.module('mediaboxApp').constant('Settings', {
     demo: false,
     country: {
-      name: 'Zimbabwe',
-      code: 'ZW' // must be 2 digit code from the list https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 
+      name: 'South Africa',
+      code: 'ZAR' // must be 2 digit code from the list https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 
     },
     handlingFee: 5,
     currency: {
-      code: 'RAND', // Paypal currency code *** Please choose from https://developer.paypal.com/docs/classic/api/currency_codes/
-      shop_currency: 'RAND',
+      code: 'USD', // Paypal currency code *** Please choose from https://developer.paypal.com/docs/classic/api/currency_codes/
+      shop_currency: 'USD',
       symbol: 'R', // Currency symbol to be displayed through out the shop
-      exchange_rate: '12' // Paypal currency code(USD) / Shop currency (INR) ***  exchange_rate should not be 0 else it will generate divided by 0 error
+      exchange_rate: '1' // Paypal currency code(USD) / Shop currency (INR) ***  exchange_rate should not be 0 else it will generate divided by 0 error
     },
     paymentStatus: ['Pending', 'Paid', 'created'], // On success from Paypal it stores as created
     orderStatus: ['Payment Pending', 'Order Placed', 'Order Accepted', 'Order Executed', 'Shipped', 'Delivered', 'Cancelled', 'Not in Stock'],

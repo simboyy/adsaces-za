@@ -6,8 +6,8 @@
 			<div class="container">
 		  <div class="row">
 			<div class="col-md-12 site-heading ">
-					<h5 style="text-align:center">&nbsp;&nbsp;Build data driven Marketing Strategies across channels?</h5>
-					<p style="text-align:center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </p>
+					<h5 style="text-align:center">&nbsp;&nbsp;Search & Buy Advertising Options</h5>
+					<p style="text-align:center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To get listed email rate card to Patnership@adspaces.co.za)  </p>
 					<div class="divider"></div>
 		    </div>
 		  </div>
@@ -152,7 +152,7 @@
                                         <li class="stats-header" ng-repeat="f in product.stats |limitTo :3"><a href="#">{{f.key}} : {{f.val}}</a></li>
                                     </ol>
                                 </div>
-								<button ng-click="main.gotoDetail(product)" type="button" class="btn btn-sm site-btn">Explore</button>
+								             <button ng-click="main.gotoDetail(product)" type="button" class="btn btn-sm site-btn">Explore</button>
                             </div>
 							  
 							 </div>
@@ -170,10 +170,10 @@
 </div>
     <div layout="row" ng-if="$stateParams.slug" class="container">
 	    
-        <div ng-include="'app/main/filter-menu.html'" ></div>
+        <div  ng-include="'app/main/filter-menu.html'" ></div>
         <!--<md-content flex layout="column">-->
         <section layout="column" layout-fill flex >
-            <div class="sort-products md-whiteframe-z2">
+            <div data-step="5" data-intro="Sort publishers by  price low  - high !" class="sort-products md-whiteframe-z2">
                 <div class="products-list-meta" ng-if="main.$mdMedia('gt-md')" flex>
                     Showing {{main.products.items.length}} products of {{main.products.count}} in: {{vm.Settings.currency.symbol}}<strong>{{main.priceSlider.min}}</strong> &nbsp;-&nbsp; {{vm.Settings.currency.symbol}}<strong>{{main.priceSlider.max}}</strong>
                 </div>
@@ -193,7 +193,7 @@
                     </md-button>
                 </section>
             </div>
-            <div layout="row">
+            <div   layout="row" >
                 <div ng-repeat="b in main.fl.brands">
                     <md-button class="md-raised" ng-click="main.removeBrand(b);" aria-label="Remove Brand Filter">
                         <ng-md-icon icon="verified_user" md-menu-align-target></ng-md-icon>
@@ -213,12 +213,12 @@
                     </md-button>
                 </div>
             </div>
-            <div style="margin-top: 10px" infinite-scroll='main.scroll()' infinite-scroll-disabled='main.products.busy' infinite-scroll-distance='1' layout-align="center center">
+            <div  data-step="6" data-intro="Targeted list of publishers you can possibly work with!" style="margin-top: 10px" infinite-scroll='main.scroll()' infinite-scroll-disabled='main.products.busy' infinite-scroll-distance='1' layout-align="center center">
                 <div dw-loading="products" dw-loading-options="{text: ''}"></div>
                 
 					
 					<div class="row" layout="row" layout-wrap layout-align="start start" >
-						  <div class="col-md-4" ng-repeat="product in main.products.items">
+						  <div data-step="7" data-intro="Select publisher that interests you !" class="col-md-4" ng-repeat="product in main.products.items">
 							 <div class="news-box" style="height: 300px">
 							   <div class="img-logo" style="margin: 5px">
                                 <center>
@@ -233,7 +233,7 @@
                                         <li class="stats-header"  ng-repeat="f in product.stats |limitTo :3"><a href="#">{{f.key}} : {{f.val}}</a></li>
                                     </ol>
                                 </div>
-								           <button ng-click="main.gotoDetail(product)" type="button" class="btn btn-sm site-btn">Explore</button>
+								           <button data-step="8" data-intro="click Explore to view publisher`s rate card !" ng-click="main.gotoDetail(product)" type="button" class="btn btn-sm site-btn">Explore</button>
                             </div>
 							  
 							 </div>
@@ -250,3 +250,4 @@
 </div>
 </div>
 <footer></footer>
+
