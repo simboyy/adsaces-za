@@ -4,16 +4,16 @@
 _________________________________________________________ -->
 <div id="top">
     <div class="container">
-        <div class="col-md-1">
+        <div class="col-md-1 col-sm-3 col-xs-6">
             <a  href="index.html">
                 <img width="140px" height="50px" src="/assets/img/logo.png"  class="hidden-xs">
                 <img width="140px" height="50px" src="/assets/img/logo.png"  class="visible-xs"><span class="sr-only"></span>
             </a>
         </div>
-         <div class="col-md-9" style="padding-left:70px">
-            <div class="col-md-6">
+         <div class="col-md-3 col-sm-3 col-xs-6 simba" >
+            <div class="col-md-6 col-sm-6 col-xs-6" >
                 <div class="row">
-                    <div class="col-md-6">
+                    <div >
                          <form>
                             <div class="form-group">
                                   <div id="advanced"
@@ -29,18 +29,27 @@ _________________________________________________________ -->
                         </form>
 
                     </div>
-                    <div class="col-md-6 form-group">
-                         <a ng-if="$stateParams.slug" style="margin: 10px" class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Show me how it works</a>
-                    </div>
+                    
                 </div>
             
 
             </div>
-            <div class="col-md-6"> 
-                <div class="navbar-buttons pull-right">
-             <md-button ng-click="vm.openCart()" class="md-raised cart" ng-if="!search.show">
+           
+           
+             
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-6 simba" >
+                  
+                    <div class="form-group pull-right  hidden-xs" style="padding-left: 20px">
+                         <a ng-if="$stateParams.slug" style="margin: 10px" class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Show me how it works</a>
+                    </div>
+         </div>
+        <div class="col-md-3 col-sm-3 col-xs-6">
+             <div class="col-md-6 col-sm-6 col-xs-6"> 
+                <div class="navbar-buttons pull-left">
+                  <md-button ng-click="vm.openCart()" class="md-raised cart" ng-if="!search.show">
                     <ng-md-icon icon="shopping_cart"></ng-md-icon>
-                    <span  show-gt-sm>Cart {{vm.cart.getTotalCount()}} Items  </span>
+                    <span  show-gt-sm  class="hidden-xs">Cart {{vm.cart.getTotalCount()}} Items  </span>
                     <span hide show-gt-sm odometer="vm.cart.getTotalPrice()">
                   </md-button>
             <!--/.nav-collapse -->
@@ -48,12 +57,13 @@ _________________________________________________________ -->
            
         </div>      
             </div>
-           
-             
-        </div>
-        <div class="col-md-2 pull-right" data-animate="fadeInDown">
+
+             <div class="col-md-3 col-sm-6 col-xs-6 pull-right" data-animate="fadeInDown">
            <top-menu  data-step="9" data-intro="Click here to access dashboard!" ng-if="!search.show"></top-menu> 
         </div>
+            
+        </div>
+        
     </div>
    </div>
 
@@ -81,10 +91,10 @@ _________________________________________________________ -->
         <!--/.navbar-header -->
 
         <div class="navbar-collapse collapse navbar-static-top megamenu pull-left" id="navigation">
-          <div collapse="isCollapsed1" class="navbar-collapse collapse" id="navbar-main2">
+          <div >
             <ul  data-step="1"  data-intro="Browse media options by category!" class="nav navbar-nav navbar-left pull-right" ng-hide="isAdmin()">
                 <li class="dropdown yamm-fw" ng-repeat="p in vm.categories">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{p.name}} <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" >{{p.name}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="yamm-content">

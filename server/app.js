@@ -29,8 +29,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _mongoose2.default.Promise = require('bluebird');
 
 
-// Connect to MongoDB
+// Connect to MongoDBmongodb://simba:1994kingsss@ds135797.mlab.com:35797/mediaboxzim
 _mongoose2.default.connect('mongodb://simboyy:1994King1204@ds143907.mlab.com:43907/mediaboxzwdemo');
+// _mongoose2.default.connect('mongodb://simba:1994kingsss@ds135797.mlab.com:35797/mediaboxzim');
 //_mongoose2.default.connect("mongodb://127.0.0.1/mediaboxzim");
 _mongoose2.default.connection.on('error', function (err) {
   console.error('MongoDB connection error: ' + err);
@@ -44,7 +45,7 @@ if (_environment2.default.seedDB) {
 
 // Setup server
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || "80";
 var app = (0, _express2.default)();
 var server = _http2.default.createServer(app);
 var socketio = require('socket.io')(server, {

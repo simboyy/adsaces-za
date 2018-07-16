@@ -18,7 +18,7 @@
                                         <img data-ng-src="data:image/png;base64,{{single.product.logo[0].base64}}" err-SRC="/assets/images/486x325.png" alt="{{single.product.name}}" class="img-responsive">
                                     </div>
                                     <md-divider md-inset></md-divider>
-                                    <div layout="column">
+                                    <div layout="column" class="hidden-xs">
                                         <div class="total-rating" layout="column" layout-align="space-between">
                                             <p>
                                                 <div layout="row" layout-align="start start" class="total"> {{single.rating.avg}}
@@ -115,7 +115,7 @@
                             </div>
                             <div data-step="4" data-intro="Publisher`s rate card !" class="box" id="div" style="margin-right: 20px">
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-5 hidden-xs hidden-sm">
                                         <summary ng-if="single.name"><small>{{single.name}} &nbsp; {{single.formart}} &nbsp;{{single.size}}</small></summary>
                                         <div style="height: 450px">
                                             <img ng-hide="single.image" src="/assets/img/preview.png" width="100%">
@@ -142,7 +142,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="col-md-7" style="height: 500px;overflow:scroll">
+                                    <div class="col-md-7 col-xs-12 col-sm-12" style="height: 500px;overflow:scroll">
                                         <p>
                                             <table md-colresize="md-colresize" class="md-table" id="exportable">
                                                 <thead>
@@ -183,7 +183,7 @@
         </div>
     </div>
        <!--div-->
-                            <section data-step="5" data-intro="View more information ,stats and figures about publisher!" style="position: relative;" class="container">
+                            <section data-step="5" data-intro="View more information ,stats and figures about publisher!" style="position: relative;" class="container hidden-xs">
                                 <!--begin tabs -->
                                 <div ng-cloak>
                                     <md-content>

@@ -12,7 +12,7 @@
 		    </div>
 		  </div>
 		  <div class="row" style="padding-left:100px;padding-right:100px" >
-			  <div class="col-sm-6 col-md-3 text-center" >
+			  <div class="col-sm-6 col-md-3 col-xs-12 text-center" >
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/banner/582597436bf2000d54ac92fd"><ng-md-icon  icon="language" size="50" md-menu-align-target></ng-md-icon></a>
@@ -24,7 +24,7 @@
 					  <button type="button" onclick="window.location.href='/Category/banner/582597436bf2000d54ac92fd'" class="btn site-btn">Explore</button>
 				</div>
 			  </div> <!-- End Col -->
-					<div class="col-sm-6 col-md-3 text-center">
+					<div class="col-sm-6 col-md-3 col-xs-12 text-center">
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/magazines/582597646bf2000d54ac9300"><ng-md-icon icon="my_library_books" size="50" md-menu-align-target></ng-md-icon></a>
@@ -37,7 +37,7 @@
 				</div>
 			  </div> <!-- End Col -->
 
-			  <div class="col-sm-6 col-md-3 text-center">
+			  <div class="col-sm-6 col-md-3 col-xs-12 text-center">
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/newspapers/5825976d6bf2000d54ac9301"><ng-md-icon icon="chrome_reader_mode" size="50" md-menu-align-target></ng-md-icon></a>
@@ -50,7 +50,7 @@
 				</div>
 			  </div> <!-- End Col -->
 
-			  <div class="col-sm-6 col-md-3 text-center">
+			  <div class="col-sm-6 col-md-3 col-xs-12 text-center">
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/cinema/582597976bf2000d54ac9304"><ng-md-icon icon="movie_creation" size="50" md-menu-align-target></ng-md-icon></a>
@@ -63,7 +63,7 @@
 				</div>
 			  </div> <!-- End Col -->
 			  
-			  <div class="col-sm-6 col-md-3 text-center">
+			  <div class="col-sm-6 col-md-3 col-xs-12 text-center">
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/radio/5825972f6bf2000d54ac92fb"><ng-md-icon icon="radio" size="50" md-menu-align-target></ng-md-icon></a>
@@ -75,7 +75,7 @@
 					  <button type="button"  onclick="window.location.href='Category/radio/5825972f6bf2000d54ac92fb'" class="btn site-btn">Explore</button>
 				</div>
 			  </div> <!-- End Col -->
-					<div class="col-sm-6 col-md-3 text-center">
+					<div class="col-sm-6 col-md-3 col-xs-12 text-center">
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/television/582597286bf2000d54ac92fa"><ng-md-icon icon="tv" size="50" md-menu-align-target></ng-md-icon></a>
@@ -88,7 +88,7 @@
 				</div>
 			  </div> <!-- End Col -->
 
-			  <div class="col-sm-6 col-md-3 text-center">
+			  <div class="col-sm-6 col-md-3 col-xs-12 text-center">
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/email-marketing/582597e46bf2000d54ac9307"><ng-md-icon icon="email" size="50" md-menu-align-target></ng-md-icon></a>
@@ -101,7 +101,7 @@
 				</div>
 			  </div> <!-- End Col -->
 
-			  <div class="col-sm-6 col-md-3 text-center">
+			  <div class="col-sm-6 col-md-3 col-xs-12 text-center">
 				<div class="used-cars-box">
 					<div class="used-cars-img">
 						<a href="/Category/billboards/582596ed6bf2000d54ac92f6"><ng-md-icon icon="chrome_reader_mode" size="50" md-menu-align-target></ng-md-icon></a>
@@ -123,7 +123,7 @@
 	</div>
 	
 	<div class="news-area" ng-if="!$stateParams.slug">
-    <div class="container">
+    <div class="container hidden-xs">
         <div class="row">
           <div class="col-md-12 site-heading ">
             <h4>Top Viewed Media</h4>           
@@ -137,7 +137,7 @@
                 
 					
 					<div class="row" layout="row" layout-wrap layout-align="start start" >
-						  <div class="col-md-3" ng-repeat="product in main.products.items | limitTo:4">
+						  <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="product in main.products.items | limitTo:4">
 							 <div class="news-box" style="height: 300px">
 							   <div class="img-logo" style="margin: 5px">
                                 <center>
@@ -218,7 +218,7 @@
                 
 					
 					<div class="row" layout="row" layout-wrap layout-align="start start" >
-						  <div data-step="7" data-intro="Select publisher that interests you !" class="col-md-4" ng-repeat="product in main.products.items">
+						  <div data-step="7" data-intro="Select publisher that interests you !" class="col-md-4 col-sm-6 col-xs-12" ng-repeat="product in main.products.items">
 							 <div class="news-box" style="height: 300px">
 							   <div class="img-logo" style="margin: 5px">
                                 <center>
