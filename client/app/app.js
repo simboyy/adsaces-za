@@ -7454,26 +7454,26 @@ angular.module('mediaboxApp').controller('ProductEfficiencyController', ['$q', '
 
                 var vm = this;
                 var a = [];
-                _.each(years, function (d) {
-                    var k = d.yyyy;
+                // _.each(years, function (d) {
+                //     var k = d.yyyy;
 
-                    var w = [];
-                    _.each(months, function (m) {
-                        //console.log(m);
-                        //
-                        if (product.newVariant.model == 'Weekly' || product.newVariant.model == 'BiWeekly') {
+                    // var w = [];
+                    // _.each(months, function (m) {
+                    //     //console.log(m);
+                    //     //
+                    //     if (product.newVariant.model == 'Weekly' || product.newVariant.model == 'BiWeekly') {
 
-                            var results = vm.getWeeksInMonth(m.mm, k);
+                    //         var results = vm.getWeeksInMonth(m.mm, k);
 
-                            _.each(results, function (res) {
-                                a.push({ productid: product._id, pname: product.name, vname: product.newVariant.name, year: k, startDate: new Date(k, m.mm, res.start), endDate: new Date(k, m.mm, res.end), available: product.newVariant.stockLevel, active: true });
-                            });
-                        } else {
-                            var startDate = new Date(k, m.mm, 1);
-                            var endDate = new Date(k, m.mm + 1, 0);
-                            a.push({ productid: product._id, pname: product.name, vname: product.newVariant.name, year: k, startDate: startDate, endDate: endDate, available: product.newVariant.stockLevel, active: true });
-                        }
-                    });
+                    //         _.each(results, function (res) {
+                    //             a.push({ productid: product._id, pname: product.name, vname: product.newVariant.name, year: k, startDate: new Date(k, m.mm, res.start), endDate: new Date(k, m.mm, res.end), available: product.newVariant.stockLevel, active: true });
+                    //         });
+                    //     } else {
+                    //         var startDate = new Date(k, m.mm, 1);
+                    //         var endDate = new Date(k, m.mm + 1, 0);
+                    //         a.push({ productid: product._id, pname: product.name, vname: product.newVariant.name, year: k, startDate: startDate, endDate: endDate, available: product.newVariant.stockLevel, active: true });
+                    //     }
+                    // });
 
                     // var week = [];
                     // _.each(months,function(m){
@@ -7488,20 +7488,21 @@ angular.module('mediaboxApp').controller('ProductEfficiencyController', ['$q', '
                     // })
 
                     // console.log(week);
-                    var v = [];
-                    _.each(w, function (r) {
-                        v.push({ slot: r, available: product.newVariant.stockLevel, active: true });
-                    });
-                    a.push({ k: k, v: v });
+                    // var v = [];
+                    // _.each(w, function (r) {
+                    //     v.push({ slot: r, available: product.newVariant.stockLevel, active: true });
+                    // });
+                    // a.push({ k: k, v: v });
 
                     //console.log(a);
-                });
+                // });
 
                 vm.product.variants.push(product.newVariant);
+                vm.product.newVariant = {};
 
-                this.Inventory.save(a, function (res) {
-                    console.log(res);
-                });
+                // this.Inventory.save(a, function (res) {
+                //     console.log(res);
+                // });
             }
 
             $http.put('/api/products/' + product._id, product).then(success).catch(err);
@@ -8031,7 +8032,7 @@ angular.module('mediaboxApp').controller('ProductsOrdersController', ['$q', 'Ord
 'use strict';
 
 angular.module('mediaboxApp').controller('RegionalSalesController', ['$q', 'Customers', 'CountryCustomers', 'OrderDetails', 'TopSellingProducts', 'scale', 'OrdersSum', function ($q, Customers, CountryCustomers, OrderDetails, TopSellingProducts, scale, OrdersSum) {
-    this.selectedCountry = 'Zimbabwe';
+    this.selectedCountry = 'South Africa';
     var sumAll = 0;
 
     this.startDate = new Date(2011, 0, 1);
@@ -10053,7 +10054,7 @@ ShoppingCart.prototype.getQuantity = function (sku, vid) {
     }
 };
 
-// get the total price for all items currently in the cart
+// get the total of all items currently in the cart
 ShoppingCart.prototype.getTotalCount = function (sku) {
     var count = 0;
     for (var i = 0; i < this.items.length; i++) {
@@ -10062,7 +10063,8 @@ ShoppingCart.prototype.getTotalCount = function (sku) {
             count += this.toNumber(item.quantity);
         }
     }
-    return count;
+    //return count;
+    return this.items.length;
 };
 
 // clear the cart

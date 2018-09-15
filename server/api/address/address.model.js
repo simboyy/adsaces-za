@@ -22,6 +22,9 @@ var AddressSchema = new _mongoose2.default.Schema({
     country: Object,
     zip: Number,
     phone: String,
+    bank:String,
+    branch: String,
+    account: String,
     active: { type: Boolean, default: true },
     uid: { type: ObjectId, ref: 'User' }
 }, {

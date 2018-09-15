@@ -22,16 +22,16 @@
         </md-buton>
       </section>
 
-  <div class="box" ng-controller="CampaignController as vm">
+  <div class="box" ng-controller="CampaignController as vm" ng-if="campaign.campaignsAll.totalCampaign">
         <div class="row">
         
               <div class="col-sm-2" style="border-right: bold">
-                <h3 >Total :<br> &nbsp;<br><div  style="margin-left:30px;color:red">{{vm.campaignsAll.totalCampaign}}</div></h3>
+                <h3 >Total <br class="hidden-xs"> &nbsp;<br hidden-xs><div  style="margin-left:30px;color:red">{{vm.campaignsAll.totalCampaign}}</div></h3>
               </div>
-              <div class="col-sm-2"><h3>Pending<br> &nbsp;<br><div  style="margin-left:30px;color:red">{{vm.campaignsPending.totalCampaign}}</div></h3></div>
-              <div class="col-sm-2"><h3>Scheduled<br> &nbsp;<br><div  style="margin-left:30px;color:red">{{vm.campaignsScheduled.totalCampaign}}</div></h3></div>
-               <div class="col-sm-2"><h3>Running<br> &nbsp;<br><div  style="margin-left:30px;color:red">{{vm.campaignsRunning.totalCampaign}}</div></h3></div>
-               <div class="col-sm-2"><h3>Completed<br> &nbsp;<br><div  style="margin-left:30px;color:red">{{vm.campaignsCompleted.totalCampaign}}</div></h3></div>
+              <div class="col-sm-2"><h3>Pending<br hidden-xs> &nbsp;<brhidden-xs><div  style="margin-left:30px;color:red">{{vm.campaignsPending.totalCampaign}}</div></h3></div>
+              <div class="col-sm-2"><h3>Scheduled<br hidden-xs> &nbsp;<br hidden-xs><div  style="margin-left:30px;color:red">{{vm.campaignsScheduled.totalCampaign}}</div></h3></div>
+               <div class="col-sm-2"><h3>Running<br hidden-xs> &nbsp;<br hidden-xs><div  style="margin-left:30px;color:red">{{vm.campaignsRunning.totalCampaign}}</div></h3></div>
+               <div class="col-sm-2"><h3>Completed<br hidden-xs> &nbsp;<br hidden-xs><div  style="margin-left:30px;color:red">{{vm.campaignsCompleted.totalCampaign}}</div></h3></div>
                <div class="col-sm-2"></div>
           
         </div>
@@ -39,9 +39,9 @@
 
 
    
-</div>
 
-   <md-content class="container" layout="column">
+
+   <md-content class="container box" layout="column">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="PENDING">
         <md-content >

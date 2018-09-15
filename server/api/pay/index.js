@@ -6,6 +6,10 @@ var _stringify2 = _interopRequireDefault(_stringify);
 
 var _express = require('express');
 
+var _md5 = require('md5');
+
+var _trim = require('trim-whitespace');
+
 var _pay = require('./pay.controller');
 
 var controller = _interopRequireWildcard(_pay);
@@ -50,6 +54,13 @@ var http = require('http');
 
 var router = new _express.Router();
 
+function toObject(arr) {
+    var rv = {};
+    for (var i = 0; i < arr.length; ++i)
+      rv[i] = arr[i];
+    return rv;
+  }
+
 function ParseMsg(msg) {
 
     var msg = msg + '';
@@ -71,35 +82,31 @@ function UrlIfy(fields) {
     var delim = "";
     var fields_string = "";
     for (var key in fields) {
-        fields_string += delim + key + '=' + fields[key];
+        fields_string += delim + key + '=' + encodeURIComponent(_trim(fields[key].toString().replace(" ", "+")));
         //console.log(fields_string);
         delim = "&";
     }
+
+    console.log(fields_string);
 
     return fields_string;
 }
 
 function CreateHash(values, MerchantKey) {
-    var string = "";
-    for (var key in values) {
-        if (key.toUpperCase() !== "HASH") {
-            string += values[key];
-        }
-    }
-    string += MerchantKey;
-    var hash = sha512(string);
-    return hash.toUpperCase();
+   // return hash.toUpperCase();
+   return _md5(UrlIfy(values));
 }
 
 function CreateMsg(values, MerchantKey) {
 
-    var fields = [];
+    //CREATE GET STRING
+    var fields = {};
     for (var key in values) {
 
         fields[key] = values[key];
     }
 
-    fields["hash"] = CreateHash(values, MerchantKey);
+    fields["signature"] = CreateHash(fields, MerchantKey);
 
     var fields_string = fields;
 
@@ -283,7 +290,7 @@ router.get('/prepare', function (req, res) {
         var data;
         var amount;
         var orderNo;
-        var paynowJSONObject;
+        var payfastJSONObject;
         var formData;
 
         (function () {
@@ -298,30 +305,55 @@ router.get('/prepare', function (req, res) {
 
             var PS_ERROR = "Error";
             var PS_OK = "Ok";
-            var PS_CREATED_BUT_NOT_PAID = "created but not paid";
-            var PS_CANCELLED = "cancelled";
-            var PS_FAILED = "failed";
-            var PS_PAID = "paid";
-            var PS_AWAITING_DELIVERY = "awaiting delivery";
-            var PS_DELIVERED = "delivered";
-            var PS_AWAITING_REDIRECT = "awaiting redirect";
-            var SITE_URL = "http://www.adspaces0.co.zw";
+            var SITE_URL = "http://www.adspaces.co.za";
+            
+            var  PF_ERR_AMOUNT_MISMATCH='Amount mismatch';
+            var  PF_ERR_BAD_SOURCE_IP='Bad source IP address';
+            var  PF_ERR_CONNECT_FAILED='Failed to connect to PayFast' ;
+            var  PF_ERR_BAD_ACCESS='Bad access of page';
+            var  PF_ERR_INVALID_SIGNATURE='Security signature mismatch' ;
+            var  PF_ERR_CURL_ERROR='An error occurred executing cURL' ;
+            var  PF_ERR_INVALID_DATA='The data received is invalid' ;
+            var  PF_ERR_UKNOWN='Unkown error occurred' ;
+             
+            // General Messages
+            var  PF_MSG_OK='Payment was successful' ;
+            var  PF_MSG_FAILED='Payment has failed' ;
 
-            paynowJSONObject = {
-                id: 3100,
-                reference: orderNo,
+            var headers = {
+                'User-Agent':       'Super Agent/0.0.1',
+                'Content-Type':     'application/x-www-form-urlencoded'
+            }
+
+            payfastJSONObject = {
+                merchant_id: 10009878,
+                merchant_key:'53n487tsfoacm',
+                return_url: 'http://adspaces.com/api/pay/gettingbackfrompayfast',               
+                cancel_url:'http://adspaces.com/api/pay/gettingbackfrompayfast',
+                notify_url: 'http://adspaces.com/api/pay/payfastupdatingus',
+                //Buyer Details
+                name_first: 'Simbarashe',
+                name_last: 'Mukorera',
+                email_address: 'smkorera@gmail.com',
+                //Transaction Details
+                m_payment_id: orderNo,
+                //Ammount in ZAR
                 amount: total,
-                additionalInfo: '',
-                returnUrl: 'http://www.adspaces.co.zw/api/pay/gettingbackfrompaynow',
-                resulturl: 'http://www.adspaces.co.zw/api/pay/paynowupdatingus',
-                authemail: '',
-                status: 'message'
+                item_name: 'Adspaces',
+                item_description: 'campaign',
+                custom_int1: '9866',
+                custom_str1: 'Custom'               
 
             };
-            formData = CreateMsg(paynowJSONObject, 'b717de9d-d716-49ae-abae-df8279ceda9b');
 
 
-            request.post({ url: 'https://www.paynow.co.zw/interface/initiatetransaction', formData: formData }, function (err, httpResponse, body) {
+           // formData = CreateMsg(paynowJSONObject, 'b717de9d-d716-49ae-abae-df8279ceda9b');
+
+           
+
+            formData = CreateMsg(payfastJSONObject, 'b717de9d-d716-49ae-abae-df8279ceda9b');
+            console.log(formData);
+              request.post({ url: 'https://sandbox.payfast.co.za/eng/process', formData: formData }, function (err, httpResponse, body) {
                 if (err) {
                     console.log('########################## Error', err);
                     var status = 'Payment failed';
@@ -330,27 +362,13 @@ router.get('/prepare', function (req, res) {
                     res.redirect('/checkout?msg=' + string);
                 } else {
 
-                    var msg = ParseMsg(body);
+                    var msg =body ;
+                    console.log('########################## We got Responds',httpResponse.caseless);
+                    var theProcessUrl = httpResponse.caseless.dict.location;
 
-                    //first check status, take appropriate action
-                    if (msg["status"] === PS_ERROR) {
+                    if(theProcessUrl){
 
-                        error = msg['error'];
-                        status = 'Payment failed';
-                        ///return res.status(400).json({id: error.requestId, message: error});
-                        var string = encodeURIComponent('Payment Failed');
-                        res.redirect('/checkout?msg=' + string);
-                    } else if (msg["status"] === PS_OK) {
-
-                        //second, check hash
-                        var validateHash = CreateHash(msg, 'b717de9d-d716-49ae-abae-df8279ceda9b');
-                        if (validateHash !== msg["hash"]) {
-                            error = "Paynow reply hashes do not match : " + validateHash + " - " + msg["hash"];
-                        } else {
-                            var theProcessUrl = msg["browserurl"];
-                            var pollUrl = msg["pollurl"];
-
-                            /***** IMPORTANT ****
+                     /***** IMPORTANT ****
                             On User has approved paying you, maybe they are awaiting delivery etc
                             
                                 Here is where you
@@ -361,40 +379,45 @@ router.get('/prepare', function (req, res) {
                             
                             *** END OF IMPORTANT ****/
 
-                            var status = 'Payment Initiated';
-                            var address = { recipient_name: options.recipient_name, line1: options.line1, city: options.city, postal_code: options.postal_code, state: '-', country: options.country_code };
-                            var orderDetails = {
-                                orderNo: orderNo,
-                                uid: options.uid,
-                                email: options.email,
-                                phone: options.phone,
-                                address: address,
-                                status: status,
-                                items: data,
-                                payment: { id: orderNo, state: "Created", cart: null, pollurl: pollUrl, email: options.email },
-                                amount: { total: subtotal / 100, currency: options.currency_code },
-                                exchange_rate: options.exchange_rate,
-                                created: Date.now(),
-                                payment_method: 'Pay Now'
+                           var status = 'Payment Initiated';
+                           var address = { recipient_name: options.recipient_name, line1: options.line1, city: options.city, postal_code: options.postal_code, state: '-', country: options.country_code };
+                           var orderDetails = {
+                               orderNo: orderNo,
+                               uid: options.uid,
+                               email: options.email,
+                               phone: options.phone,
+                               address: address,
+                               status: status,
+                               items: data,
+                               payment: { id: orderNo, state: "Created", cart: null, pollurl:theProcessUrl , email: options.email },
+                               amount: { total: subtotal / 100, currency: options.currency_code },
+                               exchange_rate: options.exchange_rate,
+                               created: Date.now(),
+                               payment_method: 'PayFast'
 
-                            };
-                            // Order.create is from order.model not from order.controller
-                            _order2.default.create(orderDetails);
+                           };
+                           // Order.create is from order.model not from order.controller
+                           _order2.default.create(orderDetails);
+                           
+                    res.redirect(theProcessUrl);
 
-                            //redirect to paynow for user to complete payment
+                        }else{
 
-                            res.redirect(theProcessUrl);
+                            res.writeHead(200, { 'Content-Type': 'text/html' });
+                            res.write(body);
+                            res.end();
                         }
-                    } else {
-                        //unknown status or one you dont want to handle locally
-                        error = "Invalid status in from Paynow, cannot continue.";
-                    }
+
+                    //first check status, take appropriate action
+
+
                 }
             }); //end request
 
         })();
     }
 });
+
 router.get('/process', function (req, res) {
     var paymentId = req.query.paymentId;
     var payerId = { 'payer_id': req.query.PayerID };
@@ -439,16 +462,18 @@ router.get('/process', function (req, res) {
     });
 });
 
-router.get('/gettingbackfrompaynow', function (req, res) {
+router.get('/gettingbackfrompayfast', function (req, res) {
 
     //Get locally saved  order settings
     //get latest order from db
     //
     //***Todo add userid in query***
 
+    console.log(res.body);
+
     _order2.default.findOne({}, { $sort: { 'created_at': -1 } }).exec().then(function (doc) {
 
-        console.log('#################getting back from paynow##############');
+        console.log('#################getting back from payfast##############');
         console.log(doc);
 
         var paymentId = doc.payment.id;
@@ -532,7 +557,7 @@ router.get('/gettingbackfrompaynow', function (req, res) {
     });
 });
 
-router.get('/paynowupdatingus', function (req, res) {
+router.get('/payfastupdatingus', function (req, res) {
 
     var paymentId = req.query.paynowreference;
     var pollurl = req.query.pollurl;

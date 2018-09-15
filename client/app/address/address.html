@@ -4,15 +4,20 @@
 <div layout="column" layout-gt-sm="<column></column>">
 <!--Address box-->
 <md-card ng-show="address.showAddressForm">
-    <md-card-content>
+	<md-card-title> 
+     <md-card-title-text>
+     SELECTED PROFILE
+     </md-card-title-text>
+    </md-card-title>
+    <md-card-content style="min-width: 400px">
 	<p ng-show="address.error" class="md-warn">{{address.error.message}}</p>
-	<h3>SELECTED ADDRESS</h3>
+	
 	<form name="form" ng-submit="address.saveAddress(address.addr);new.address=false;address.addr = address.address[0];" novalidate layout="column">
 		<md-input-container md-is-error="(form.name.$error.required || form.name.$error.name) && form.name.$dirty">
-			<label>Name</label>
+			<label>Company Name</label>
 			<input name="name" type="name" ng-model="address.addr.name" required autofocus>
 			<div ng-messages="form.name.$error" ng-if="form.name.$dirty">
-				<div ng-message="required">Name is required</div>
+				<div ng-message="required">Company Name is required</div>
 			</div>
 		</md-input-container>
         
@@ -32,27 +37,60 @@
 			</div>
 		</md-input-container>
 
-        <md-input-container md-is-error="(form.zip.$error.required || form.zip.$error.zip) && form.zip.$dirty">
+       <!--  <md-input-container md-is-error="(form.zip.$error.required || form.zip.$error.zip) && form.zip.$dirty">
 			<label>Zip</label>
 			<input name="zip" type="zip" ng-model="address.addr.zip" required only-numbers/>
 			<div ng-messages="form.zip.$error" ng-if="form.zip.$dirty">
 				<div ng-message="required">Zip code is required</div>
 			</div>
-		</md-input-container>
+		</md-input-container> -->
         
-        <md-input-container md-is-error="(form.state.$error.required || form.state.$error.state) && form.state.$dirty">
+        <!-- <md-input-container md-is-error="(form.state.$error.required || form.state.$error.state) && form.state.$dirty">
 			<label>State</label>
 			<input name="state" type="state" ng-model="address.addr.state" required/>
 			<div ng-messages="form.state.$error" ng-if="form.state.$dirty">
 				<div ng-message="required">State is required</div>
 			</div>
+		</md-input-container> -->
+		<md-input-container md-is-error="(form.email.$error.required || form.email.$error.email) && form.phone.$dirty">
+			<label>Email</label>
+			<input name="email" type="email" ng-model="address.addr.email" required/>
+			<div ng-messages="form.email.$error" ng-if="form.email.$dirty">
+				<div ng-message="required">Email number is required</div>
+			</div>
 		</md-input-container>
         
         <md-input-container md-is-error="(form.phone.$error.required || form.phone.$error.phone) && form.phone.$dirty">
-			<label>Phone</label>
+			<label>Telephone</label>
 			<input name="phone" type="phone" ng-model="address.addr.phone" required/>
 			<div ng-messages="form.phone.$error" ng-if="form.phone.$dirty">
 				<div ng-message="required">Phone number is required</div>
+			</div>
+		</md-input-container>
+
+		<hr><h3>Banking Details</h3>
+		 <p><i>How you recieve payments</i></p>
+
+		<md-input-container md-is-error="( form.bank.$error.bank) && form.bank.$dirty">
+			<label>Bank</label>
+			<input name="bank" type="bank" ng-model="address.addr.bank" />
+			<div ng-messages="form.bank.$error" ng-if="form.bank.$dirty">
+				<div ng-message="required">Bank is required</div>
+			</div>
+		</md-input-container>
+		<md-input-container md-is-error="( form.branch.$error.branch) && form.branch.$dirty">
+			<label>Branch</label>
+			<input name="branch" type="branch" ng-model="address.addr.branch" />
+			<div ng-messages="form.branch.$error" ng-if="form.branch.$dirty">
+				<div ng-message="required">Branch is required</div>
+			</div>
+		</md-input-container>
+
+		<md-input-container md-is-error="( form.account.$error.branch) && form.account.$dirty">
+			<label>Account Number</label>
+			<input name="account" type="account" ng-model="address.addr.account" />
+			<div ng-messages="form.account.$error" ng-if="form.account.$dirty">
+				<div ng-message="required">Account is required</div>
 			</div>
 		</md-input-container>
 
@@ -78,7 +116,7 @@
 </md-card>
 <div layout="column">
 <md-button class="md-raised" ng-click="address.addressForm(true);address.new.address=true; address.addr={country: address.Settings.country.name}">
-    <ng-md-icon icon="location_on"></ng-md-icon>Add Billing Address
+    <ng-md-icon icon="location_on"></ng-md-icon>Add Billing Details
 </md-button>
 <div layout="row" layout-align="start start" layout-wrap>
 
@@ -90,7 +128,7 @@ ng-class="{'selected':(a==address.addr)} "
 >
       <md-card-header layout="row" layout-align="space-between start">
           <md-card-header-text>
-            <h3>ADDRESS - {{$index+1}}</h3>
+            <h3>PROFILE - {{$index+1}}</h3>
           </md-card-header-text>
           	<div>
 				  <md-button ng-click="address.delete(a)" aria-label="Delete Address"><ng-md-icon icon="delete"></ng-md-icon></md-button>  
@@ -98,11 +136,11 @@ ng-class="{'selected':(a==address.addr)} "
       </md-card-header>
 	  
       <md-card-content layout="column" layout-align="start start">
-			      {{a.name}}<br/>
+			{{a.name}}<br/>
             {{a.address}}<br/>
             {{a.city}}<br/>
             {{a.state}}<br/>
-            {{a.zip}}<br/>
+            {{a.email}}<br/>
             {{a.phone}}
       </md-card-content>
       

@@ -177,7 +177,7 @@ function index(req, res) {
   if (req.query) {
 
     var q = isJson(req.query.where);
-    //console.log(q);
+    console.log(q);
     var sort = isJson(req.query.sort);
     req.query.skip = parseInt(req.query.skip);
     req.query.limit = parseInt(req.query.limit);
@@ -188,10 +188,11 @@ function index(req, res) {
       if (err) {
         return handleError(res, err);
       }
+      //console.log(products);
       return res.status(200).json(products);
     });
   } else {
-    return _product2.default.find({}, null, {sort: {created_at: -1}}).exec().then(respondWithResult(res)).catch(handleError(res));
+    return _product2.default.find({}, null, {sort: {created_at: -1}}).limit(5).exec().then(respondWithResult(res)).catch(handleError(res));
   }
 }
 
@@ -202,7 +203,7 @@ function show(req, res) {
 
 // Get all orders for a publisher
 function pubProducts(req, res) {
-  return _product2.default.find({ 'uid': req.user.email }).exec().then(respondWithResult(res)).catch(handleError(res));
+  return _product2.default.find({ 'uid': req.user.email }).sort({created_at:-1}).limit(2).exec().then(respondWithResult(res)).catch(handleError(res));
 }
 
 // Creates a new Product in the DB
