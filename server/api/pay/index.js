@@ -2,6 +2,12 @@
 
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
+const fs = require('fs');
+var sys = require ('sys'),
+url = require('url'),
+http = require('http'),
+qs = require('querystring');
+
 var _stringify2 = _interopRequireDefault(_stringify);
 
 var _express = require('express');
@@ -328,9 +334,9 @@ router.get('/prepare', function (req, res) {
             payfastJSONObject = {
                 merchant_id: 10009878,
                 merchant_key:'53n487tsfoacm',
-                return_url: 'http://adspaces.com/api/pay/gettingbackfrompayfast',               
-                cancel_url:'http://adspaces.com/api/pay/gettingbackfrompayfast',
-                notify_url: 'http://adspaces.com/api/pay/payfastupdatingus',
+                return_url: 'http://adspaces.co.za/api/pay/gettingbackfrompayfast',               
+                cancel_url:'http://adspaces.co.za/api/pay/cancel',
+                notify_url: 'http://adspaces.co.za/api/pay/payfastupdatingus',
                 //Buyer Details
                 name_first: 'Simbarashe',
                 name_last: 'Mukorera',
@@ -390,7 +396,7 @@ router.get('/prepare', function (req, res) {
                                status: status,
                                items: data,
                                payment: { id: orderNo, state: "Created", cart: null, pollurl:theProcessUrl , email: options.email },
-                               amount: { total: subtotal / 100, currency: options.currency_code },
+                               amount: { total: subtotal , currency: options.currency_code },
                                exchange_rate: options.exchange_rate,
                                created: Date.now(),
                                payment_method: 'PayFast'
@@ -469,155 +475,61 @@ router.get('/gettingbackfrompayfast', function (req, res) {
     //
     //***Todo add userid in query***
 
-    console.log(res.body);
+    //res.redirect('/order');
 
-    _order2.default.findOne({}, { $sort: { 'created_at': -1 } }).exec().then(function (doc) {
-
-        console.log('#################getting back from payfast##############');
-        console.log(doc);
-
-        var paymentId = doc.payment.id;
-        var pollurl = doc.payment.pollurl;
-
-        //poll paynow for payment update
-
-        request({
-            url: pollurl,
-            method: "POST",
-            json: true, // <--Very important!!!
-            body: ''
-        }, function (error, response, body) {
-
-            if (response) {
-
-                //close connection  
-                var msg = ParseMsg(response.body);
-
-                var MerchantKey = 'b717de9d-d716-49ae-abae-df8279ceda9b';
-                var validateHash = CreateHash(msg, MerchantKey);
-
-                if (validateHash != msg["hash"]) {
-                    console.log('Invalid hash detected');
-                    //header("Location: $checkout_url");  
-                } else {
-                    /***** IMPORTANT **** 
-                    On Paynow, payment status has changed, say from Awaiting Delivery to Delivered 
-                     
-                        Here is where you 
-                        1. Update your local shopping cart of Payment Status etc and do appropriate actions here, Save data to DB 
-                        2. Email, SMS Notifications to customer, merchant etc 
-                        3. Any other thing 
-                     
-                    *** END OF IMPORTANT ****/
-
-                    // console.log('payment success', payment);
-                    if (msg["status"] === PS_PAID || msg['status'] === PS_AWAITING_DELIVERY || msg['status'] === PS_DELIVERED) {
-                        // Save order details so that if no response received, status will Awaiting Payment
-                        _order2.default.findOneAndUpdate({ 'orderNo': msg["reference"] }, { status: 'Paid' }, { upsert: false, setDefaultsOnInsert: true, runValidators: true }).exec().then(function (doc) {
-
-                            var mailParams = doc;
-
-                            mailParams.id = msg["paynowreference"];
-                            mailParams.to = doc.email;
-
-                            sendmail.send(config.mailOptions.orderUpdated(mailParams));
-
-                            var string = encodeURIComponent("Payment Received");
-                            res.redirect('/order?id=' + msg["paynowreference"] + '&msg=' + string);
-                        }).then(function (err) {
-                            if (err) {
-                                // console.log('Could not find the payment reference',err);
-                                var string = encodeURIComponent("Payment Received");
-                                res.redirect('/order?id=' + msg["paynowreference"] + '&msg=' + string);
-                            }
-                        });
-                    }if (msg['status'] === PS_CANCELLED) {
-
-                        _order2.default.findOneAndUpdate({ 'orderNo': msg["reference"] }, { status: msg["status"] }, { upsert: false, setDefaultsOnInsert: true, runValidators: true }).exec();
-                        var string = encodeURIComponent('Payment Cancelled');
-
-                        res.redirect('/checkout?id=' + msg["paynowreference"] + '&msg=' + string);
-                    } else {
-                        _order2.default.findOneAndUpdate({ 'orderNo': msg["reference"] }, { status: msg["status"] }, { upsert: false, setDefaultsOnInsert: true, runValidators: true }).exec();
-                        var string = encodeURIComponent('Payment Not Approved');
-
-                        res.redirect('/checkout?id=' + msg["paynowreference"] + '&msg=' + string);
-                    }
-                }
-            }
-        }); //end poll request
-
-    }).then(function (err) {
-        if (err) {
-            // console.log('Could not find the payment reference',err);
-            sendmail.send(config.mailOptions.orderPlaced(mailParams));
-            string = encodeURIComponent("Payment Received");
-            res.redirect('/order?id=' + msg["paynowreference"] + '&msg=' + string);
-        }
-    });
+    
 });
 
-router.get('/payfastupdatingus', function (req, res) {
-
-    var paymentId = req.query.paynowreference;
-    var pollurl = req.query.pollurl;
-
-    request({
-        url: pollurl,
-        method: "POST",
-        json: true, // <--Very important!!!
-        body: ''
-    }, function (error, response, body) {
-
-        if (response) {
-
-            //close connection  
-            var msg = ParseMsg(response.body);
-
-            var MerchantKey = 'b717de9d-d716-49ae-abae-df8279ceda9b';
-            var validateHash = CreateHash(msg, MerchantKey);
-
-            if (validateHash != msg["hash"]) {
-                //header("Location: $checkout_url");  
-            } else {
-                /***** IMPORTANT **** 
-                On Paynow, payment status has changed, say from Awaiting Delivery to Delivered 
-                 
-                    Here is where you 
-                    1. Update your local shopping cart of Payment Status etc and do appropriate actions here, Save data to DB 
-                    2. Email, SMS Notifications to customer, merchant etc 
-                    3. Any other thing 
-                 
-                *** END OF IMPORTANT ****/
-
-                // console.log('payment success', payment);
-                if (msg["status"] === PS_PAID) {
-                    // Save order details so that if no response received, status will Awaiting Payment
-                    _order2.default.findOneAndUpdate({ 'orderNo': msg["reference"] }, { status: 'Paid' }, { upsert: false, setDefaultsOnInsert: true, runValidators: true }).exec().then(function (doc) {
-
-                        var mailParams = doc;
-
-                        mailParams.id = msg["paynowreference"];
-                        mailParams.to = doc.email;
-
-                        sendmail.send(config.mailOptions.orderPlaced(mailParams));
-                    }).then(function (err) {
-                        if (err) {
-                            // console.log('Could not find the payment reference',err);
-                            sendmail.send(config.mailOptions.orderPlaced(mailParams));
-                            string = encodeURIComponent("Payment Received");
-                            res.redirect('/order?id=' + msg["paynowreference"] + '&msg=' + string);
-                        }
-                    });
-                } else {
-                    _order2.default.findOneAndUpdate({ 'orderNo': msg["reference"] }, { status: msg["status"] }, { upsert: false, setDefaultsOnInsert: true, runValidators: true }).exec();
-                    var string = encodeURIComponent('Payment Not Approved');
-
-                    //res.redirect('/checkout?id='+msg["paynowreference"]+'&msg=' + string);
-                }
-            }
+router.post('/payfastupdatingus', function (req, res) {
+    
+    console.log("****ITN notification back from payfast");
+    console.log(req.method);
+    console.log(req.body);
+     
+     // VALIDATE HASH
+     // CREATE GET STRING
+     var fields = {};
+     for (var key in req.body) {        
+        if(key!='signature'){
+         fields[key] = req.body[key];
         }
-    });
+     }
+ 
+     var signature = CreateHash(fields, 'key');
+
+     if(signature!=req.body.signature){
+        process.exit(1);
+     }
+
+      //Update status
+
+      if(req.body.payment_status== 'COMPLETE' )
+      {
+         // If complete, update  application
+         // Save order details so that if no response received, status will Awaiting Payment
+         _order2.default.findOneAndUpdate({ 'orderNo': req.body.m_payment_id }, { status: 'Paid' }, { upsert: false, setDefaultsOnInsert: true, runValidators: true }).exec().then(function (doc) {
+
+            var mailParams = doc;
+            mailParams.id = req.body.m_payment_id;
+            mailParams.to = doc.email;
+            sendmail.send(config.mailOptions.orderUpdated(mailParams));
+
+            
+        }).then(function (err) {
+            if (err) {
+               console.log('Could not find the payment reference',err);
+                
+            }
+        });
+
+      }
+      else
+      {
+         // If unknown status, do nothing (which is the safest course of action)
+      }
+    
+    
+    
 });
 
 router.get('/cancel', function (req, res) {

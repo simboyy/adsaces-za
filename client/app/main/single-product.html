@@ -208,7 +208,7 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Recommendations</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container" ng-show="single.product.recommendations > 0">                                                                                    
+                                                                                            <div class="md-table-container" ng-show="single.product.recommendations.length > 0">                                                                                    
                                                                                                 <table md-colresize="md-colresize" class="md-table" id="exportable">
                                                                                                 
                                                                                                 <tbody>
@@ -220,7 +220,7 @@
                                                                                             </table>
                                                                                             </div>
 
-                                                                                            <div ng-hide="single.product.recommendations > 0">
+                                                                                            <div ng-hide="single.product.recommendations.length > 0">
                                                                                             No data Available
 
                                                                                            </div>
@@ -241,7 +241,7 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Perfomance History</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container" ng-show="single.product.perfomanceHistory > 0">                                                                                    
+                                                                                            <div class="md-table-container" ng-show="single.product.perfomanceHistory/length > 0">                                                                                    
                                                                                                 <table md-colresize="md-colresize" class="md-table" id="exportable">
                                                                                                 
                                                                                                 <tbody>
@@ -252,7 +252,7 @@
                                                                                                 </tbody>
                                                                                             </table>
                                                                                            </div>
-                                                                                            <div ng-hide="single.product.perfomanceHistory > 0">
+                                                                                            <div ng-hide="single.product.perfomanceHistory.length > 0">
                                                                                             No data Available
 
                                                                                            </div>
@@ -311,7 +311,7 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Past Advertisers</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container" ng-show="single.product.pastAdvertisers > 0">                                                                                        
+                                                                                            <div class="md-table-container" ng-show="single.product.pastAdvertisers.length > 0">                                                                                        
                                                                                                 <table md-colresize="md-colresize" class="md-table" id="exportable">
                                                                                                 
                                                                                                 <tbody>
@@ -324,7 +324,7 @@
                                                                                     
                                                                                           </div>
 
-                                                                                          <div ng-hide="single.product.pastAdvertisers > 0">
+                                                                                          <div ng-hide="single.product.pastAdvertisers.length > 0">
                                                                                             No data Available
 
                                                                                            </div>
@@ -419,7 +419,7 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">{{single.product.name}} Production Calendar</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container" ng-show ="single.product.productionCalendar > 0">                                                                                        
+                                                                                            <div class="md-table-container" ng-show ="single.product.productionCalendar.length > 0">                                                                                        
                                                                                                 <table md-colresize="md-colresize" class="md-table" id="exportable">
                                                                                                  <thead>
                                                                                                     <tr class="md-table-headers-row">
@@ -442,7 +442,7 @@
                                                                                             </table>
                                                                                           </div>
 
-                                                                                          <div ng-hide="single.product.productionCalendar > 0">
+                                                                                          <div ng-hide="single.product.productionCalendar.length > 0">
                                                                                             No data Available
 
                                                                                            </div>
@@ -736,7 +736,7 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Audience Profle</div>
                                                                                         <div class="panel-body">
-                                                                                             <div class="md-table-container" ng-show="single.product.targetAudience  > 0">                                                                                        
+                                                                                             <div class="md-table-container" ng-show="single.product.targetAudience.length  > 0">                                                                                        
                                                                                                 <table md-colresize="md-colresize" class="md-table" id="exportable">
                                                                                                    
                                                                                                     <tbody>
@@ -748,7 +748,7 @@
                                                                                                 </table>
                                                                                            </div>
 
-                                                                                           <div ng-hide="single.product.targetAudience  > 0">
+                                                                                           <div ng-hide="single.product.targetAudience.length  > 0">
                                                                                              No data Available
 
                                                                                            </div>
@@ -785,7 +785,7 @@
                                                                         <li class="active"><a data-target="#process" data-toggle="tab">Execution Process</a></li>
                                                                         <li><a data-target="#publishing" data-toggle="tab">Confirmaton</a></li>
                                                                         <li><a data-target="#help" data-toggle="tab">How Adspaces can help you ?</a></li>
-                                                                        <li><a data-target="#creative" data-toggle="tab">Creative</a></li>
+                                                                        <li><a data-target="#creative" data-toggle="tab">ArtWork</a></li>
                                                                     </ul>
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane active" id="process">
@@ -897,7 +897,7 @@
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading">Guideline to Advert Creation</div>
                                                                                         <div class="panel-body">
-                                                                                            <div class="md-table-container" ng-show="single.product.guidelines  > 0">                                                                                    
+                                                                                            <div class="md-table-container" ng-show="single.product.guidelines.length  > 0">                                                                                    
                                                                                                     <table md-colresize="md-colresize" class="md-table" id="exportable">
                                                                                                     
                                                                                                     <tbody>
@@ -911,7 +911,7 @@
                                                                                             
                                                                                         </div>
 
-                                                                                        <div ng-hide="single.product.guidelines  > 0">
+                                                                                        <div ng-hide="single.product.guidelines.length  > 0">
                                                                                              No data Available
 
                                                                                            </div>

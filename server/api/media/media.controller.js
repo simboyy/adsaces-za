@@ -36,7 +36,7 @@ var BUCKET_NAME = 'mediabox-adverts';
 
 
    var aws = require('aws-sdk');
-   aws.config.update({accessKeyId: 'AKIAID45Z2MGJGNU4U7Q', secretAccessKey: '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'});
+   aws.config.update({accessKeyId: '', secretAccessKey: ''});
    aws.config.update({region: 'us-east-1'});
 
    var s3 = new aws.S3();

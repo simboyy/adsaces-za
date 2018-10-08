@@ -5858,13 +5858,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     }
                 }
                 if (vm.fl.categories) {
-                    if (vm.fl.categories.length > 0) {
+                    if (vm.fl.categories.length > 1) {
                         var categoryIds = [];
                         _.forEach(vm.fl.categories, function (category) {
                             categoryIds.push(category._id);
                         });
                         f.push({ 'category': { $in: categoryIds } });
+                        
                     }
+                    if (vm.fl.categories.length == 1) {
+                      var categoryId = null;
+                      _.forEach(vm.fl.categories, function (category) {
+                          categoryId = category._id;
+                      });
+                      f.push({ "category":categoryId });
+                      
+                  }
                 }
 
                 f.push({ 'variants.price': { $gt: vm.priceSlider.min, $lt: vm.priceSlider.max } });

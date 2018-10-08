@@ -95,7 +95,7 @@ function handleError(res, statusCode) {
 
 // Get all features group
 exports.count = function (req, res) {
-  if (req.query) {
+  if (req.sudo) {
     var q = isJson(req.query.where);
     _product2.default.find(q).count().exec(function (err, count) {
       if (err) {
@@ -177,14 +177,15 @@ function index(req, res) {
   if (req.query) {
 
     var q = isJson(req.query.where);
-    console.log(q);
+    console.log("now getting data");
+    console.log(q.$and);
     var sort = isJson(req.query.sort);
     req.query.skip = parseInt(req.query.skip);
     req.query.limit = parseInt(req.query.limit);
     var select = isJson(req.query.select);
 
     var p = [];
-    _product2.default.find(q).limit(req.query.limit).skip(req.query.skip).sort(sort).sort({description: -1}).select(select).exec(function (err, products) {
+    _product2.default.find(isJson(req.query.where)).limit(req.query.limit).skip(req.query.skip).sort(sort).sort({description: -1}).select(select).exec(function (err, products) {
       if (err) {
         return handleError(res, err);
       }

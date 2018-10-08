@@ -12,7 +12,7 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _mongoose = require('mongoose');
+var _mongoose = require('mongoose').set('debug', true);
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -30,7 +30,7 @@ _mongoose2.default.Promise = require('bluebird');
 
 
 // Connect to MongoDBmongodb://simba:1994kingsss@ds135797.mlab.com:35797/mediaboxzim
-_mongoose2.default.connect('mongodb://simboyy:1994King1204@ds143907.mlab.com:43907/mediaboxzwdemo');
+_mongoose2.default.connect('mongodb://simboyy:1994King1204@ds143907.mlab.com:43907/mediaboxzwdemo',{ useMongoClient: true });
 // _mongoose2.default.connect('mongodb://simba:1994kingsss@ds135797.mlab.com:35797/mediaboxzim');
 //_mongoose2.default.connect("mongodb://127.0.0.1/mediaboxzim");
 _mongoose2.default.connection.on('error', function (err) {
