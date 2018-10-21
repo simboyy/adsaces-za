@@ -15,12 +15,12 @@ var Schema = _mongoose2.default.Schema,
 
 var ProductSchema = new _mongoose2.default.Schema({
   sku: String,
+  link:String,
   name: String,
   nameLower: String,
   phone: String,
   email: String,
   slug: String,
-  logo: Array, 
   website: String,
   terms: String,
   category: { type: _mongoose.Schema.Types.ObjectId, ref: 'Category' },

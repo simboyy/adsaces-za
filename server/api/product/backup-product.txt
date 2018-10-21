@@ -43,7 +43,7 @@ var BUCKET_NAME = 'mediabox-adverts';
 
 
    var aws = require('aws-sdk');
-   aws.config.update({accessKeyId: '', secretAccessKey: ''});
+   aws.config.update({accessKeyId: 'AKIAJSFS5MTSWJFKCUYQ', secretAccessKey: '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'});
    aws.config.update({region: 'us-east-1'});
 
    var s3 = new aws.S3();
@@ -184,42 +184,39 @@ exports.priceRange = function (req, res) {
 
 // Gets a list of Products
 function index(req, res) {
-  if (req.query) {
+  // if (req.query) {
 
-    var q = isJson(req.query.where);
-    console.log("now getting data");
-    //console.log(q.$and);
-    var sort = isJson(req.query.sort);
-    req.query.skip = parseInt(req.query.skip);
-    req.query.limit = parseInt(req.query.limit);
-    var select = isJson(req.query.select);
+  //   var q = isJson(req.query.where);
+  //   console.log("now getting data");
+  //   console.log(q.$and);
+  //   var sort = isJson(req.query.sort);
+  //   req.query.skip = parseInt(req.query.skip);
+  //   req.query.limit = parseInt(req.query.limit);
+  //   var select = isJson(req.query.select);
 
-    var p = [];
-    _product2.default.find(isJson(req.query.where), { logo: 0 }).limit(req.query.limit).skip(req.query.skip).sort(sort).sort({description: -1}).select(select).exec(function (err, products) {
-      if (err) {
-        return handleError(res, err);
-      }
-      //console.log(products);
-      products.forEach(function (doc) { 
-          console.log(doc.variants);
-      });
-      return res.status(200).json(products);
-    });
-  } else {
-   // return _product2.default.find({}, { logo: 0 }, {sort: {created_at: -1}}).limit(5).exec().then(respondWithResult(res)).catch(handleError(res));
-  }
+  //   var p = [];
+  //   _product2.default.find(isJson(req.query.where)).limit(req.query.limit).skip(req.query.skip).sort(sort).sort({description: -1}).select(select).exec(function (err, products) {
+  //     if (err) {
+  //       return handleError(res, err);
+  //     }
+  //     //console.log(products);
+  //     return res.status(200).json(products);
+  //   });
+  // } else {
+  //   return _product2.default.find({}, null, {sort: {created_at: -1}}).limit(5).exec().then(respondWithResult(res)).catch(handleError(res));
+  // }
 
   
 
-  // _product2.default.find({}, null, {sort: {created_at: -1}}).limit(5).skip(5).exec(function (err, docs) {
-  //   docs.forEach(function (doc) { 
+  _product2.default.find({}, null, {sort: {created_at: -1}}).limit(5).skip(5).exec(function (err, docs) {
+    docs.forEach(function (doc) { 
       
      
-  
+      console.log(doc);
 
 
-  //   });
-  // });
+    });
+  });
 
 }
 
@@ -240,40 +237,6 @@ function create(req, res) {
   req.body.updated = now;
   req.body.updated_at = now;
   req.body.created_at = now;
-
-  // get logo[0].base64 
-  // convert 
-  // upload on s3 
-  // 
-  // update req.body.link  
-  if(req.body.logo){
- 
-  var base64 = req.body.logo[0].base64;  
-  var fileBuffer = new Buffer(base64.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-  var metaData = base64.split(';')[0].split('/')[1];
-  var remoteFilename = req.body.slug+'.'+req.body.logo[0].filetype.split('/')[1];
-  //console.log(remoteFilename);
-  var link = 'https://s3.amazonaws.com/mediabox-adverts/'+remoteFilename;
-  console.log(link);
-  //console.log(req.body);
-  req.body.link = link;
-  s3.putObject({
-    ACL: 'public-read',
-    Bucket: BUCKET_NAME,
-    Key: remoteFilename,
-    Body: fileBuffer,
-    ContentType: metaData,
-    ContentEncoding: 'base64', // required
-    ContentType: `image/${metaData}`
-  }, function(error, response) {
-    console.log('uploaded file[' + remoteFilename + '] to [' + remoteFilename + '] as [' + metaData + ']');
-    console.log(response);
-  });
-
-}
-
-
-  
   if (req.body.name) req.body.nameLower = req.body.name.toString().toLowerCase();
   if (!req.body.slug && req.body.name) req.body.slug = req.body.name.toString().toLowerCase().replace(/\s+/g, '-') // Replace spaces with -
   .replace(/[^\w\-]+/g, '') // Remove all non-word chars
@@ -294,39 +257,6 @@ function update(req, res) {
   if (!req.body.uid) req.body.uid = req.user.email;
 
   if (req.body.name) req.body.nameLower = req.body.name.toString().toLowerCase();
-
-    // get logo.base64 
-  // convert 
-  // upload on s3 
-  // 
-  // update req.body.link  
-
-  console.log(req.body);
-  if(req.body.logo.base64){
- 
-    var base64 = req.body.logo.base64;  
-    var fileBuffer = new Buffer(base64.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-    var metaData = base64.split(';')[0].split('/')[1];
-    var remoteFilename = req.body.slug+'.'+req.body.logo.filetype.split('/')[1];
-    //console.log(remoteFilename);
-    var link = 'https://s3.amazonaws.com/mediabox-adverts/'+remoteFilename;
-    console.log(link);
-    //console.log(req.body);
-    req.body.link = link;
-    s3.putObject({
-      ACL: 'public-read',
-      Bucket: BUCKET_NAME,
-      Key: remoteFilename,
-      Body: fileBuffer,
-      ContentType: metaData,
-      ContentEncoding: 'base64', // required
-      ContentType: `image/${metaData}`
-    }, function(error, response) {
-      console.log('uploaded file[' + remoteFilename + '] to [' + remoteFilename + '] as [' + metaData + ']');
-      console.log(response);
-    });
-  
-  }
 
   // Just to enable checking if the category has any product
   _category2.default.update({}, { $pull: { products: { _id: req.params.id } } }, { multi: true }, function removeConnectionsCB(err, obj) {

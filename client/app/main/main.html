@@ -126,22 +126,20 @@
     <div class="container hidden-xs">
         <div class="row">
           <div class="col-md-12 site-heading ">
-            <h4>Top Viewed Media</h4>           
+            <!-- <h4>Top Viewed Media</h4>            -->
             <div class="divider"></div>
           </div>
        </div>
       <div class="row">
              
-              <div style="margin-top: 10px" infinite-scroll='main.scroll()'  infinite-scroll-distance='1' layout-align="center center">
-                <div dw-loading="products" dw-loading-options="{text: ''}"></div>
-                
-					
-					<div class="row" layout="row" layout-wrap layout-align="start start" >
+              <!-- <div style="margin-top: 10px" infinite-scroll='main.scroll()'  infinite-scroll-distance='1' layout-align="center center">
+                             
+						<div class="row" layout="row" layout-wrap layout-align="start start" >
 						  <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="product in main.products.items | limitTo:4">
 							 <div class="news-box" style="height: 300px">
 							   <div class="img-logo" style="margin: 5px">
                                 <center>
-                                    <img ng-click="main.gotoDetail(product)" width="150px" height="90px" data-ng-src="data:image/png;base64,{{product.logo[0].base64}}" data-err-src="images/png/avatar.png" />
+                                    <img ng-click="main.gotoDetail(product)" width="150px" height="90px" data-ng-src="{{product.link}}" data-err-src="images/png/avatar.png" />
                                 </center>
                             </div>
                             <div class="text text-center" style="margin-top: 10px;height: 250px">
@@ -160,7 +158,7 @@
               
              
           
-                    </div>
+                    </div> -->
                
             </div>
               
@@ -222,7 +220,7 @@
 							 <div class="news-box" style="height: 300px">
 							   <div class="img-logo" style="margin: 5px">
                                 <center>
-                                    <img ng-click="main.gotoDetail(product)" width="150px" height="90px" data-ng-src="data:image/png;base64,{{product.logo[0].base64}}" data-err-src="images/png/avatar.png" />
+                                    <img ng-click="main.gotoDetail(product)" width="150px" height="90px" data-ng-src="{{product.link}}" data-err-src="images/png/avatar.png" />
                                 </center>
                             </div>
                             <div class="text text-center" style="margin-top: 10px;height: 250px">

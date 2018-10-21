@@ -31,7 +31,7 @@ var CampaignSchema = new _mongoose2.default.Schema({
   campaignNo: String,
   campaignName: String,
   campaignDate: { type: Date, default: Date.now },
-  items: [{ sku: String, name: String, size: String, dateRange: String, quantity: String, mrp: String, price: String, image: String, category: String, startDate: { type: Date }, endDate: { type: Date }, advertiser: Object, publisher: String, publisheruid: String, uid: String, status: Object({ name: String, val: Number }), creative: Object, request: [{ startDate: { type: Date }, endDate: { type: Date }, dueDate: { type: Date }, budget: String, objective: String, contactName: String, contactEmail: String }], messages: [{ id: String, text: String, avatar: String, date: { type: Date } }] }],
+  items: [{ sku: String, name: String, size: String, dateRange: String, quantity: String, mrp: String, price: String, image: String, category: String, startDate: { type: Date }, endDate: { type: Date }, advertiser: Object, publisher: String, publisheruid: String, uid: String, status: Object({ name: String, val: Number }), creative: Object,AltText:String,DestinationUrl:String, request: [{ startDate: { type: Date }, endDate: { type: Date }, dueDate: { type: Date }, budget: String, objective: String, contactName: String, contactEmail: String }], messages: [{ id: String, text: String, avatar: String, date: { type: Date } }] }],
   status: { type: String, default: 'Campaign Placed' },
   active: { type: Boolean, default: true },
   payment_method: String,

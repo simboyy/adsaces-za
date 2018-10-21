@@ -6,7 +6,7 @@
             <section layout="column" layout-fill flex style="overflow:hidden">
                 <div class="sort-products md-whiteframe-z2" style="margin-left:10px;margin-right:10px">
                     <div>
-                        Home > <a ui-sref="/">Publishers</a> > Advertising in {{single.product.name}}
+                        Home > <a ui-sref="/">Publishers</a> > Advertising with {{single.product.name}}
                     </div>
                 </div>
                 <div class="container">
@@ -15,7 +15,7 @@
                             <div class="row" id="productMain">
                                 <div class="col-sm-3">
                                     <div id="mainImage" style="height: 60%" class="md-whiteframe-z1">
-                                        <img data-ng-src="data:image/png;base64,{{single.product.logo[0].base64}}" err-SRC="/assets/images/486x325.png" alt="{{single.product.name}}" class="img-responsive">
+                                        <img data-ng-src="{{single.product.link}}" err-SRC="/assets/images/486x325.png" alt="{{single.product.name}}" class="img-responsive">
                                     </div>
                                     <md-divider md-inset></md-divider>
                                     <div layout="column" class="hidden-xs">
@@ -162,7 +162,9 @@
                                                             <br><small>{{adspace.model}}</small></td>
                                                         <td class="md-table-header"><small> 
                                                           <div layout="row" layout-align="start center">
-                                                          <cart-buttons  data-step="6" data-intro="Select to buy ad space and get 5 % discount!" variant="adspace" product="single.product"></cart-buttons>
+                                                              
+                                                         <cart-buttons ng-hide="adspace.model=='CPM'" data-step="6" data-intro="Select to buy ad space and get 5 % discount!" variant="adspace" product="single.product"></cart-buttons> 
+                                                          <cpm-buttons ng-show="adspace.model=='CPM'" data-step="6" data-intro="Select to buy ad space and get 5 % discount!" variant="adspace" product="single.product"></cpm-buttons>
                                                           
                                                       </div>
                                                  

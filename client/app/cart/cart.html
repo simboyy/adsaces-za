@@ -46,10 +46,10 @@
                                 <th>Publisher</th>
                                 <th>Upload Advert </th>
                                 <th style="width: 250px">Start and End Date</th>
-                                <th style="width: 100px">Available</th>
+                                <th style="width: 100px">Availability</th>
                                 <th>Price</th>
-                                <th>Insert(s)</th>
-                                <th>Total</th>
+                                <th>Quantity</th>
+                                <th>Cost</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
@@ -74,10 +74,23 @@
                                         <img style="width: 100px;border: none;" ng-src="{{item.creative}}" err-SRC="/assets/images/material-shop.jpg">
                                     </md-input-container>
                                     <div ng-hide="item.creative">
-                                        <button class="btn btn-danger" ng-hide="isAdmin()" ng-click="cart.mediaLibrary($index)"><i class="fa fa-image"></i><span class="glyphicon glyphicon-upload"></span></button>
+                                        <button class="btn btn-danger" ng-hide="isAdmin()" ng-click="cart.mediaLibrary($index)"><i class="fa fa-image">Upload Creative</i><span class="glyphicon glyphicon-upload"></span></button>
                                     </div>
                                     <div ng-show="item.creative">
-                                        <button class="btn btn-success" ng-hide="isAdmin()" ng-click="cart.mediaLibrary($index)"><i class="fa fa-image"></i><span class="glyphicon glyphicon-upload"></span></button>
+                                        <button class="btn btn-success" ng-hide="isAdmin()" ng-click="cart.mediaLibrary($index)"><i class="fa fa-image">Upload Creative</i><span class="glyphicon glyphicon-upload"></span></button>
+                                    </div>
+                                    <div ng-show="item.mrp">
+                                           &nbsp;<br>
+                                        <div class="form-group has-feedback">
+                                            <label style="color: #333">Alt Text</label>
+                                            <input type="text"  style="height:30px" class="form-control" id="config-demo" name="alttext" value="" ng-model="item.AltText" placeholder="Your company name" />
+                                          
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                                <label style="color: #333" >Destination Url</label>
+                                                <input type="url"  style="height:30px" class="form-control" id="config-demo" name="alttext" value="" ng-model="item.DestinationUrl" placeholder="Your website address" />
+                                              
+                                            </div>
                                     </div>
                                 </td>
                                 <td class="product-name">
@@ -93,22 +106,33 @@
                                         <img src="/assets/images/AjaxLoader.gif"  style="border: none;" alt="">
                                         
                                     </div>
-                                    <!-- <ng-md-icon icon="check_circle" ng-show="cart.loaded[$index]=='available'" class="material-icons md-96 success"></ng-md-icon><br>
-                                    <ng-md-icon icon="highlight_off" ng-show="cart.loaded[$index]=='notavailable'"  class="material-icons md-96 cancel"></ng-md-icon> -->
-                                    &nbsp;&nbsp;&nbsp;<span ng-show="cart.loaded[$index]=='notavailable'" class="green">10</span>
+                                     <ng-md-icon icon="check_circle" ng-show="cart.loaded[$index]=='notavailable'" class="material-icons md-96 success"></ng-md-icon><br>
+                                    <ng-md-icon icon="highlight_off" ng-show="cart.loaded[$index]=='available'"  class="material-icons md-96 cancel"></ng-md-icon> 
+                                    &nbsp;&nbsp;&nbsp;<!--<span ng-show="cart.loaded[$index]=='notavailable'" class="green">10</span>-->
                                     <span ng-show="cart.loaded[$index]=='available'" class="green">{{cart.available[$index]}}</span>
                                 </td>
-                                <td>{{item.price | currency:"R"}}</td>
+                                <td><span ng-show="item.mrp=='CPM'">{{item.quantity|number}} Impressions @ {{item.price | currency:"R"}}<br>/ {{item.mrp}}</span>
+                                    <span ng-hide="item.mrp=='CPM'">{{item.price | currency:"R"}}<br>{{item.mrp}}</span>
+                                </td>
                                 <td>
-                                    <md-button class="md-raised md-primary small-button md-icon-button" ng-click="vm.cart.addItem({sku:item.sku, name:item.name, slug:item.slug, mrp:item.mrp, price:item.price, weight:item.weight, vid:item.vid}, +1)" aria-label="Add to cart">
+                                    <md-button ng-hide="item.mrp=='CPM'" class="md-raised md-primary small-button md-icon-button" ng-click="vm.cart.addItem({sku:item.sku, name:item.name, slug:item.slug, mrp:item.mrp, price:item.price, weight:item.weight, vid:item.vid}, +1)" aria-label="Add to cart">
                                         <ng-md-icon icon="add"></ng-md-icon>
                                     </md-button>
-                                    <div class="md-raised" ng-disabled="true" aria-label="Cart quantity">{{vm.cart.getQuantity(item.sku, item.vid)}}</div>
-                                    <md-button class="md-raised md-primary small-button md-icon-button" ng-click="vm.cart.addItem({sku:item.sku, name:item.name, slug:item.slug, mrp:item.mrp, price:item.price, weight:item.weight, vid:item.vid}, -1)" aria-label="Remove from cart">
+                                    <md-button ng-show="item.mrp=='CPM'" class="md-raised md-primary small-button md-icon-button" ng-click="vm.cart.addItem({sku:item.sku, name:item.name, slug:item.slug, mrp:item.mrp, price:item.price, weight:item.weight, vid:item.vid}, +50000)" aria-label="Add to cart">
+                                        <ng-md-icon icon="add"></ng-md-icon>
+                                    </md-button>
+                                    <div class="md-raised" ng-disabled="true" aria-label="Cart quantity">{{vm.cart.getQuantity(item.sku, item.vid)| number}}</div>
+                                    <md-button ng-hide="item.mrp=='CPM'" class="md-raised md-primary small-button md-icon-button" ng-click="vm.cart.addItem({sku:item.sku, name:item.name, slug:item.slug, mrp:item.mrp, price:item.price, weight:item.weight, vid:item.vid}, -1)" aria-label="Remove from cart">
+                                        <ng-md-icon icon="remove"></ng-md-icon>
+                                    </md-button>
+                                    <md-button ng-show="item.mrp=='CPM'" class="md-raised md-primary small-button md-icon-button" ng-click="vm.cart.addItem({sku:item.sku, name:item.name, slug:item.slug, mrp:item.mrp, price:item.price, weight:item.weight, vid:item.vid}, -50000)" aria-label="Remove from cart">
                                         <ng-md-icon icon="remove"></ng-md-icon>
                                     </md-button>
                                 </td>
-                                <td><span><strong>{{item.price * item.quantity | currency:"R"}}</strong></span></td>
+                                <td>
+                                    <span ng-hide="item.mrp=='CPM'"><strong>{{item.price * item.quantity | currency:"R"}}</strong></span>
+                                    <span ng-show="item.mrp=='CPM'"><strong>{{item.price * item.quantity/1000 | currency:"R"}}</strong></span>
+                                </td>
                                 <td class="product-actions">
                                     <a aria-label="Remove {{item.name}} from cart" ng-click="vm.cart.addItem({sku:item.sku, vid: item.vid}, -10000000);">
                                         <ng-md-icon icon="close" aria-label="Close dialog"></ng-md-icon>

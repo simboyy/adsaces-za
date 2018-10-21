@@ -348,6 +348,17 @@ background-color: #dd0000     ;
       <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.js"></script>
       <script   type="text/javascript">
        kendo.culture("de-DE");
+       const formatter = new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'ZAR',
+                  minimumFractionDigits: 2
+                }) ;
+       const nformatter =  new Intl.NumberFormat('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 0
+                })         
+
+               
    </script>
    <script type="text/javascript">
      
